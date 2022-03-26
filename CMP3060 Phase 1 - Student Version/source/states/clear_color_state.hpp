@@ -10,10 +10,8 @@ class ClearColorState: public our::State {
         //To see how the clear color is written in the json files, see "config/blue-screen.json"
         //To know how read data from a nlohmann::json object, 
         //look at the following documentation: https://json.nlohmann.me/features/element_access/
-        nlohmann:: json app_cofig ;
-        app_cofig = getApp()->getConfig();
         
-        nlohmann:: json clear_color = app_cofig["scene"]["clear-color"] ;
+        nlohmann:: json clear_color = getApp()->getConfig()["scene"]["clear-color"] ;
 
         
         glClearColor(clear_color["r"], clear_color["g"], clear_color["b"],clear_color["a"]);
