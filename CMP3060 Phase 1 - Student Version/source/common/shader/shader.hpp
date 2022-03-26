@@ -28,18 +28,22 @@ namespace our {
 
         void use() { 
             //TODO: call opengl to use the program identified by this->program
+            glUseProgram(this->program);
         }
 
         GLuint getUniformLocation(const std::string &name) {
             //TODO: call opengl to get the uniform location for the uniform defined by name from this->program
+            return glGetUniformLocation(this->program, name.c_str());
         }
 
         void set(const std::string &uniform, GLfloat value) {
             //TODO: call opengl to set the value to the uniform defined by name
+            glUniform1f(this->getUniformLocation(uniform), value);
         }
 
         void set(const std::string &uniform, glm::vec2 value) {
             //TODO: call opengl to set the value to the uniform defined by name
+            
         }
 
         void set(const std::string &uniform, glm::vec3 value) {
