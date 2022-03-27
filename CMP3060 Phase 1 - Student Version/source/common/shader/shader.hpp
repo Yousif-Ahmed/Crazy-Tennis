@@ -43,20 +43,24 @@ namespace our {
 
         void set(const std::string &uniform, glm::vec2 value) {
             //TODO: call opengl to set the value to the uniform defined by name
-            
+            glUniform2f(this->getUniformLocation(uniform) , value.x , value.y);
         }
 
         void set(const std::string &uniform, glm::vec3 value) {
             //TODO: call opengl to set the value to the uniform defined by name
+            glUniform3f(this->getUniformLocation(uniform), value.x , value.y , value.z);
         }
 
         void set(const std::string &uniform, glm::vec4 value) {
             //TODO: call opengl to set the value to the uniform defined by name
+            glUniform4f(this->getUniformLocation(uniform) , value.x , value.y , value.z, value.w);
         }
 
 
         //TODO: Delete the copy constructor and assignment operator
         //Question: Why do we do this? Hint: Look at the deconstructor
+        ShaderProgram(ShaderProgram const &) = delete ;
+        ShaderProgram & operator =(ShaderProgram const &) = delete ;
     };
 
 }
