@@ -53,7 +53,7 @@ bool our::ShaderProgram::attach(const std::string &filename, GLenum type) const
     }
 
     // TODO: attach the shader to the program then delete the shader
-    glAttachShader(this->program , shaderID);
+    glAttachShader(program , shaderID);
     glDeleteShader(shaderID);
     // We return true since the compilation succeeded
     return true;
@@ -62,7 +62,7 @@ bool our::ShaderProgram::attach(const std::string &filename, GLenum type) const
 bool our::ShaderProgram::link() const
 {
     // TODO: call opengl to link the program identified by this->program
-    glLinkProgram(this->program);
+    glLinkProgram(program);
     // Here we check for linking errors
     // TODO: Uncomment this if block
     if(auto error = checkForLinkingErrors(program); error.size() != 0){
