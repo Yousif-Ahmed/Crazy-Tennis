@@ -68,7 +68,7 @@ bool our::ShaderProgram::attach(const std::string &filename, GLenum type) const
     // 2st parameter : shader object 
     glAttachShader(program , shaderID);
     // After attaching the shader object with the program object 
-    // There is no need for the shader pbject and we can free the memory form the shader object
+    // There is no need for the shader object and we can free the memory form the shader object
     glDeleteShader(shaderID);
     // We return true since the compilation succeeded
     return true;

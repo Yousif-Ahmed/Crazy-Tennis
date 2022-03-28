@@ -54,8 +54,15 @@ class FullscreenTriangleState: public our::State {
         }
 
         //TODO: Create a vertex Array
+
+        // generate vertex array object
+        // first parameter: number of vertex array objects
+        // second parametert: the id of the created array
         glGenVertexArrays(1 , &VAO);
+
+        // bind the vertex array object
         glBindVertexArray(VAO);
+
         // We set the clear color to be black
         glClearColor(0.0, 0.0, 0.0, 1.0);
     }
@@ -66,11 +73,12 @@ class FullscreenTriangleState: public our::State {
         glClear(GL_COLOR_BUFFER_BIT);
 
         //TODO: Draw a triangle using the vertex array and the program
-        glBindVertexArray(VAO);
-        program.use();
+
+        // render vertex array data
+        // first parameter: mode for rendering
+        // second parameter: start index to render from in vertex array
+        // third parameter: number of vertices to render
         glDrawArrays(GL_TRIANGLES,0 ,3);
-
-
     }
 
     // onInitialize() function is called once after the state ends

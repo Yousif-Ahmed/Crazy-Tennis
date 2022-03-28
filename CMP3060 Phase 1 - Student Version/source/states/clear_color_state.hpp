@@ -11,13 +11,11 @@ class ClearColorState: public our::State {
         //To know how read data from a nlohmann::json object, 
         //look at the following documentation: https://json.nlohmann.me/features/element_access/
         
+        // get the clear color from configuration file
         nlohmann:: json clear_color = getApp()->getConfig()["scene"]["clear-color"] ;
 
-        
+        // specify clear values for the color buffers with rgba format
         glClearColor(clear_color["r"], clear_color["g"], clear_color["b"],clear_color["a"]);
-        glClear(GL_COLOR_BUFFER_BIT);
-        
-
     }
 
     // onDraw(deltaTime) function is called every frame 
