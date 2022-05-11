@@ -7,7 +7,13 @@
 
 our::Texture2D* our::texture_utils::empty(GLenum format, glm::ivec2 size){
     our::Texture2D* texture = new our::Texture2D();
-    //TODO: (Req 10) Finish this function to create an empty texture with the given size and format
+    //DONE: (Req 10) Finish this function to create an empty texture with the given size and format
+    
+    // NOTE : don't know which format is passed intenal or what ????
+    //Bind the texture 
+    texture->bind();
+
+    glTexImage2D(GL_TEXTURE_2D, 0 ,GL_RGBA8 , size.x , size.y , 0 , format ,GL_UNSIGNED_BYTE , (void*) nullptr );
     
     return texture;
 }
@@ -34,7 +40,26 @@ our::Texture2D* our::texture_utils::loadImage(const std::string& filename, bool 
     // Create a texture
     our::Texture2D* texture = new our::Texture2D();
     //Bind the texture such that we upload the image data to its storage
-    //TODO: (Req 4) Finish this function to fill the texture with the data found in "pixels" and generate the mipmaps if requested
+    texture->bind() ;
+    //Done: (Req 4) Finish this function to fill the texture with the data found in "pixels" and generate the mipmaps if requested
+        
+    // NOTE :we can set unpack alighnment ti 4-byte but this is not necessary since Alignment is 4 by default 
+
+    // filling the texture with all data found un pixels variable 
+    // target : which is specifies the target to which the texture is bound in our case we 
+    // used GL_TEXTURE_2D bound 
+    // level : specifies the level-of-detail number as Level 0 is the base image level
+    // internal format : specifies the number of color components in the texture and we use RGBA
+    // width: the width of texture image 
+    // height : the width of texture image 
+    // border : must be 0
+    // format : Specifies the format of the pixel data in our case RGBA 
+    // type : Specifies the data type of the pixel data in our case GL_UNSIGNED_BYTE
+    // data : specifies a pointe to the image data in memory.
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, size.x, size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE,(void*) pixels);
+    
+    if (generate_mipmap)  glGenerateMipmap(GL_TEXTURE_2D); 
+
 
     stbi_image_free(pixels); //Free image data after uploading to GPU
     return texture;
