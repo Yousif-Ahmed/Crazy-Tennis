@@ -139,16 +139,25 @@ namespace our {
         std::sort(transparentCommands.begin(), transparentCommands.end(), [cameraForward](const RenderCommand& first, const RenderCommand& second){
             //TODO: (Req 8) Finish this function
             // HINT: the following return should return true "first" should be drawn before "second". 
+
+
+
             return false;
         });
 
         //TODO: (Req 8) Get the camera ViewProjection matrix and store it in VP
         glm::mat4 VP = glm::mat4(1.0f);
         //TODO: (Req 8) Set the OpenGL viewport using windowSize
+        glm::ivec4 windowSize = glm::ivec4(0, 0, 0, 0);
 
         //TODO: (Req 8) Set the clear color to black and the clear depth to 1
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         
         //TODO: (Req 8) Set the color mask to true and the depth mask to true (to ensure the glClear will affect the framebuffer)
+        glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+        glDepthMask(GL_TRUE);
+
+
         
 
         // If there is a postprocess material, bind the framebuffer
@@ -158,19 +167,60 @@ namespace our {
         }
 
         //TODO: (Req 8) Clear the color and depth buffers
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
         
         //TODO: (Req 8) Draw all the opaque commands
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
+
+
+        
+
+        glm::mat4 MVP = camera->getProjectionMatrix() * camera->getViewMatrix() * entity->getLocalToWorldMatrix();
+        
+        glm::mat4 MV = camera->getViewMatrix() * entity->getLocalToWorldMatrix();
+        
+        glm::mat4 M = entity->getLocalToWorldMatrix();
+
+
+
+
         
         // If there is a sky material, draw the sky
         if(this->skyMaterial){
             //TODO: (Req 9) setup the sky material
+
+            // Setup the sky material
+            skyMaterial->shader->use();
+            skyMaterial->shader->setUniform("MVP", MVP);
+            skyMaterial->shader->setUniform("MV", MV);
+            skyMaterial->shader->setUniform("M", M);
+            skyMaterial->shader->setUniform("cameraPosition", camera->getOwner()->getPosition());
+            skyMaterial->shader->setUniform("cameraForward", cameraForward);
+            skyMaterial->shader->setUniform("time", time);
+            skyMaterial->shader->setUniform("sunDirection", sunDirection);
+            skyMaterial->shader->setUniform("sunColor", sunColor);
+            skyMaterial->shader->setUniform("skyColor", skyColor);
+            skyMaterial->shader->setUniform("skyIntensity", skyIntensity);
+            skyMaterial->shader->setUniform("skyTint", skyTint);
+
+
+
+
             
             //TODO: (Req 9) Get the camera position
+            glm::vec3 cameraPosition = glm::vec3(0.0, 0.0, 0.0);
+
 
             //TODO: (Req 9) Create a model matrix for the sy such that it always follows the camera (sky sphere center = camera position)
+            glm::mat4 skyModelMatrix = glm::mat4(1.0f);
+
 
             //TODO: (Req 9) We want the sky to be drawn behind everything (in NDC space, z=1)
+            
+            glm::vec4 NDC = MVP * glm::vec4(position, 1.0f);
+            NDC.z = 1.0f;
+
             // We can acheive the is by multiplying by an extra matrix after the projection but what values should we put in it?
             glm::mat4 alwaysBehindTransform = glm::mat4(
             //  Row1, Row2, Row3, Row4
@@ -180,12 +230,48 @@ namespace our {
                 0.0f, 0.0f, 0.0f, 1.0f  // Column4
             );
             //TODO: (Req 9) set the "transform" uniform
+
+            // Set transform to be uniform
+            glUniformMatrix4fv(transformUniform, 1, GL_FALSE, glm::value_ptr(MVP * alwaysBehindTransform));
+
             
             //TODO: (Req 9) draw the sky sphere
+
+            // Draw the sky sphere
+            skyMaterial->shader->use();
+            skyMaterial->sampler->bind();
+            skyMaterial->shader->setUniform("u_texture", 0);
+            skyMaterial->shader->setUniform("u_model", skyModelMatrix);
+            skyMaterial->shader->setUniform("u_view", camera->getViewMatrix());
+            skyMaterial->shader->setUniform("u_projection", camera->getProjectionMatrix());
+            skyMaterial->shader->setUniform("u_cameraPosition", cameraPosition);
+            skyMaterial->shader->setUniform("u_time", (float)glfwGetTime());
+            skyMaterial->shader->setUniform("u_sunDirection", glm::vec3(0.0, 0.0, 1.0));
+            skyMaterial->shader->setUniform("u_sunColor", glm::vec3(1.0, 1.0, 1.0));
+            skyMaterial->shader->setUniform("u_skyColor", glm::vec3(0.5, 0.5, 0.5));
+            skyMaterial->shader->setUniform("u_fogColor", glm::vec3(0.5, 0.5, 0.5));
+            skyMaterial->shader->setUniform("u_fogDensity", 0.01f);
+            skyMaterial->shader->setUniform("u_fogStart", 0.0f);
+            skyMaterial->shader->setUniform("u_fogEnd", 100.0f);
+            skyMaterial->shader->setUniform("u_fogEnabled", true);
+            skyMaterial->shader->setUniform("u_gamma", 2.2f);
+            skyMaterial->shader->setUniform("u_exposure", 1.0f);
+            skyMaterial->shader->setUniform("u_toneMapping", 0);
+            skyMaterial->shader->setUniform("u_bloomEnabled", false);
+            skyMaterial->shader->setUniform("u_bloomThreshold", 0.0f);
+            skyMaterial->shader->setUniform("u_bloomIntensity", 0.0f);
+            skyMaterial->shader->setUniform("u_bloomKernelSize", 0);
+            skyMaterial->shader->setUniform("u_bloomBlurSigma", 0.0f);
+    
+
             
         }
         //TODO: (Req 8) Draw all the transparent commands
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
+
+        
+
+
         
 
         // If there is a postprocess material, apply postprocessing
