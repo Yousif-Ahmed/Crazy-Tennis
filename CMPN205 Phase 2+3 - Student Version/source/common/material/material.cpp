@@ -47,8 +47,8 @@ namespace our {
         TintedMaterial::setup();
         shader->set("alphaThreshold", alphaThreshold);
         texture->bind();
-        sampler->bind(1);
-        shader->set("tex" , 1);
+        sampler->bind(0);
+        shader->set("tex" , 0);
     }
 
     // This function read the material data from a json object
