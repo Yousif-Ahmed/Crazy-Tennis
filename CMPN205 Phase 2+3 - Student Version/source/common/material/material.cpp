@@ -44,7 +44,7 @@ namespace our {
     // Then it should bind the texture and sampler to a texture unit and send the unit number to the uniform variable "tex" 
     void TexturedMaterial::setup() const {
         //DONE: (Req 6) Write this function
-        Material::setup();
+        TintedMaterial::setup();
         shader->set("alphaThreshold", alphaThreshold);
         texture->bind();
         sampler->bind(1);
