@@ -309,8 +309,7 @@ namespace our
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
             // TODO: (Req 10) Setup the postprocess material and draw the fullscreen triangle
             postprocessMaterial->setup();
-            postprocessMaterial->shader->use();
-            glDraw
+            glDrawArrays(GL_TRIANGLES,0,postProcessVertexArray);
         }
     }
 
