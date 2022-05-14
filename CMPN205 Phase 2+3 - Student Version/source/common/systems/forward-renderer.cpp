@@ -135,20 +135,28 @@ namespace our {
 
         //TODO: (Req 8) Modify the following line such that "cameraForward" contains a vector pointing the camera forward direction
         // HINT: See how you wrote the CameraComponent::getViewMatrix, it should help you solve this one
-        glm::vec3 cameraForward = glm::vec3(0.0, 0.0, 0.0);
+        glm::vec3 cameraForward = glm::vec3(camera->getViewMatrix() * glm::vec4(0, 0, -1, 0));
         std::sort(transparentCommands.begin(), transparentCommands.end(), [cameraForward](const RenderCommand& first, const RenderCommand& second){
             //TODO: (Req 8) Finish this function
             // HINT: the following return should return true "first" should be drawn before "second". 
 
 
+            // calculate first distance
+            glm::vec3 firstDistance = cameraForward * glm::dot(cameraForward, first.center );
+            // calculate second distance
+            glm::vec3 secondDistance = cameraForward * glm::dot(cameraForward, second.center );
+            // return true if first distance is less than second distance
+            return firstDistance.z < secondDistance.z;
 
-            return false;
         });
 
         //TODO: (Req 8) Get the camera ViewProjection matrix and store it in VP
-        glm::mat4 VP = glm::mat4(1.0f);
+        //  Get the camera ViewProjection matrix and store it in VP
+        glm::mat4 VP = camera->getViewMatrix() * camera->getProjectionMatrix(windowSize);
+        
         //TODO: (Req 8) Set the OpenGL viewport using windowSize
-        glm::ivec4 windowSize = glm::ivec4(0, 0, 0, 0);
+        //  Set the OpenGL viewport using windowSize
+        glViewport(0, 0, windowSize.x, windowSize.y);
 
         //TODO: (Req 8) Set the clear color to black and the clear depth to 1
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -173,14 +181,25 @@ namespace our {
         //TODO: (Req 8) Draw all the opaque commands
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
 
+        //  Draw all the opaque commands
+        for(auto command : opaqueCommands){
+            // Set the transform uniform
+            command.material->shader->set("transform", VP * command.localToWorld);
+            // Draw the mesh
+            command.mesh->draw();
+
+
+        }
+
+
 
         
 
-        glm::mat4 MVP = camera->getProjectionMatrix() * camera->getViewMatrix() * entity->getLocalToWorldMatrix();
+        //glm::mat4 MVP = camera->getProjectionMatrix() * camera->getViewMatrix() * entity->getLocalToWorldMatrix();
         
-        glm::mat4 MV = camera->getViewMatrix() * entity->getLocalToWorldMatrix();
+        //glm::mat4 MV = camera->getViewMatrix() * entity->getLocalToWorldMatrix();
         
-        glm::mat4 M = entity->getLocalToWorldMatrix();
+        //glm::mat4 M = entity->getLocalToWorldMatrix();
 
 
 
@@ -189,8 +208,13 @@ namespace our {
         // If there is a sky material, draw the sky
         if(this->skyMaterial){
             //TODO: (Req 9) setup the sky material
+            //  setup the sky material
+            skyMaterial->shader->set("transform", VP);
+
+            
 
             // Setup the sky material
+            /*
             skyMaterial->shader->use();
             skyMaterial->shader->setUniform("MVP", MVP);
             skyMaterial->shader->setUniform("MV", MV);
@@ -203,23 +227,29 @@ namespace our {
             skyMaterial->shader->setUniform("skyColor", skyColor);
             skyMaterial->shader->setUniform("skyIntensity", skyIntensity);
             skyMaterial->shader->setUniform("skyTint", skyTint);
+            */
 
 
 
 
             
             //TODO: (Req 9) Get the camera position
-            glm::vec3 cameraPosition = glm::vec3(0.0, 0.0, 0.0);
+            // Calculate the camera position
+            glm::vec3 cameraPosition = glm::vec3(camera->getViewMatrix() * glm::vec4(0, 0, 0, 1));
+            
 
 
             //TODO: (Req 9) Create a model matrix for the sy such that it always follows the camera (sky sphere center = camera position)
-            glm::mat4 skyModelMatrix = glm::mat4(1.0f);
+            glm::mat4 skyModelMatrix = glm::translate(glm::mat4(1.0f), cameraPosition);
 
 
             //TODO: (Req 9) We want the sky to be drawn behind everything (in NDC space, z=1)
+
+            skyModelMatrix = glm::scale(skyModelMatrix, glm::vec3(1.0f, 1.0f, -1.0f));
+
             
-            glm::vec4 NDC = MVP * glm::vec4(position, 1.0f);
-            NDC.z = 1.0f;
+            //glm::vec4 NDC = MVP * glm::vec4(position, 1.0f);
+            //NDC.z = 1.0f;
 
             // We can acheive the is by multiplying by an extra matrix after the projection but what values should we put in it?
             glm::mat4 alwaysBehindTransform = glm::mat4(
@@ -230,7 +260,11 @@ namespace our {
                 0.0f, 0.0f, 0.0f, 1.0f  // Column4
             );
             //TODO: (Req 9) set the "transform" uniform
+            //  set the "transform" uniform
+            skyMaterial->shader->set("transform", VP * alwaysBehindTransform * skyModelMatrix);
 
+
+            /*
             // Set transform to be uniform
             glUniformMatrix4fv(transformUniform, 1, GL_FALSE, glm::value_ptr(MVP * alwaysBehindTransform));
 
@@ -262,12 +296,21 @@ namespace our {
             skyMaterial->shader->setUniform("u_bloomIntensity", 0.0f);
             skyMaterial->shader->setUniform("u_bloomKernelSize", 0);
             skyMaterial->shader->setUniform("u_bloomBlurSigma", 0.0f);
-    
+            */
 
             
         }
         //TODO: (Req 8) Draw all the transparent commands
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
+        //  draw all the transparent commands
+        for(auto command : transparentCommands){
+            
+            command.material->shader->set("transform", VP);
+            // Draw the command mesh
+            command.material->shader->use();
+            command.mesh->draw();
+            
+        }
 
         
 
