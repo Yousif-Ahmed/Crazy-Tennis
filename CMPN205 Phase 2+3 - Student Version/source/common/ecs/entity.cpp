@@ -13,11 +13,11 @@ namespace our {
     glm::mat4 Entity::getLocalToWorldMatrix() const {
         //TODO: (Req 7) Write this function
         glm::mat4 localToWorld = localTransform.toMat4();
-        Entity* parent = parent;
-        while(parent != nullptr){
+        Entity* p = parent;
+        while(p != nullptr){
             
-            localToWorld = parent->localTransform.toMat4() * localToWorld;
-            parent = parent->parent;
+            localToWorld = p->localTransform.toMat4() * localToWorld;
+            p = p->parent;
 
         }
         return localToWorld;
