@@ -23,7 +23,8 @@ namespace our {
             // Hints: the sky will be draw after the opaque objects so we would need depth testing but which depth funtion should we pick?
             // We will draw the sphere from the inside, so what options should we pick for the face culling.
             PipelineState skyPipelineState{};
-            
+            skyPipelineState.depthTesting.enabled = true ;
+            skyPipelineState.depthTesting.function =GL_LEQUAL ;
             // Load the sky texture (note that we don't need mipmaps since we want to avoid any unnecessary blurring while rendering the sky)
             std::string skyTextureFile = config.value<std::string>("sky", "");
             Texture2D* skyTexture = texture_utils::loadImage(skyTextureFile, false);
@@ -213,82 +214,33 @@ namespace our {
         if(this->skyMaterial){
             //TODO: (Req 9) setup the sky material
             //  setup the sky material
-            skyMaterial->shader->set("transform", VP);
-
-            
-
-            // Setup the sky material
-          
-
-
-
-
+            skyMaterial->setup();
             
             //TODO: (Req 9) Get the camera position
             // Calculate the camera position
-            glm::vec3 cameraPosition = glm::vec3(camera->getViewMatrix() * glm::vec4(0, 0, 0, 1));
+            glm::vec3 cameraPosition = camera->getOwner()->getLocalToWorldMatrix() * glm::vec4(0, 0, 0, 1);
             
-
 
             //TODO: (Req 9) Create a model matrix for the sy such that it always follows the camera (sky sphere center = camera position)
             glm::mat4 skyModelMatrix = glm::translate(glm::mat4(1.0f), cameraPosition);
 
 
             //TODO: (Req 9) We want the sky to be drawn behind everything (in NDC space, z=1)
-
-            skyModelMatrix = glm::scale(skyModelMatrix, glm::vec3(1.0f, 1.0f, -1.0f));
-
-            
-            //glm::vec4 NDC = MVP * glm::vec4(position, 1.0f);
-            //NDC.z = 1.0f;
-
             // We can acheive the is by multiplying by an extra matrix after the projection but what values should we put in it?
             glm::mat4 alwaysBehindTransform = glm::mat4(
             //  Row1, Row2, Row3, Row4
                 1.0f, 0.0f, 0.0f, 0.0f, // Column1
                 0.0f, 1.0f, 0.0f, 0.0f, // Column2
-                0.0f, 0.0f, 1.0f, 0.0f, // Column3
-                0.0f, 0.0f, 0.0f, 1.0f  // Column4
+                0.0f, 0.0f, 0.0f, 0.0f, // Column3
+                0.0f, 0.0f, 1.0f, 1.0f  // Column4
             );
             //TODO: (Req 9) set the "transform" uniform
             //  set the "transform" uniform
-            skyMaterial->shader->set("transform", VP * alwaysBehindTransform * skyModelMatrix);
-
-
-            /*
-            // Set transform to be uniform
-            glUniformMatrix4fv(transformUniform, 1, GL_FALSE, glm::value_ptr(MVP * alwaysBehindTransform));
-
+            skyMaterial->shader->set("transform", alwaysBehindTransform * VP *skyModelMatrix   );
             
             //TODO: (Req 9) draw the sky sphere
-
-            // Draw the sky sphere
-            skyMaterial->shader->use();
-            skyMaterial->sampler->bind();
-            skyMaterial->shader->setUniform("u_texture", 0);
-            skyMaterial->shader->setUniform("u_model", skyModelMatrix);
-            skyMaterial->shader->setUniform("u_view", camera->getViewMatrix());
-            skyMaterial->shader->setUniform("u_projection", camera->getProjectionMatrix());
-            skyMaterial->shader->setUniform("u_cameraPosition", cameraPosition);
-            skyMaterial->shader->setUniform("u_time", (float)glfwGetTime());
-            skyMaterial->shader->setUniform("u_sunDirection", glm::vec3(0.0, 0.0, 1.0));
-            skyMaterial->shader->setUniform("u_sunColor", glm::vec3(1.0, 1.0, 1.0));
-            skyMaterial->shader->setUniform("u_skyColor", glm::vec3(0.5, 0.5, 0.5));
-            skyMaterial->shader->setUniform("u_fogColor", glm::vec3(0.5, 0.5, 0.5));
-            skyMaterial->shader->setUniform("u_fogDensity", 0.01f);
-            skyMaterial->shader->setUniform("u_fogStart", 0.0f);
-            skyMaterial->shader->setUniform("u_fogEnd", 100.0f);
-            skyMaterial->shader->setUniform("u_fogEnabled", true);
-            skyMaterial->shader->setUniform("u_gamma", 2.2f);
-            skyMaterial->shader->setUniform("u_exposure", 1.0f);
-            skyMaterial->shader->setUniform("u_toneMapping", 0);
-            skyMaterial->shader->setUniform("u_bloomEnabled", false);
-            skyMaterial->shader->setUniform("u_bloomThreshold", 0.0f);
-            skyMaterial->shader->setUniform("u_bloomIntensity", 0.0f);
-            skyMaterial->shader->setUniform("u_bloomKernelSize", 0);
-            skyMaterial->shader->setUniform("u_bloomBlurSigma", 0.0f);
-            */
-
+            skySphere->draw();
+            
             
         }
         //TODO: (Req 8) Draw all the transparent commands
