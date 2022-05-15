@@ -40,7 +40,7 @@ namespace our {
        
         glm::vec4 eye = M * glm::vec4(0,0,0,1);
         glm::vec4 center = M * glm::vec4(0,0,-1,1);
-        glm::vec4 up = M * glm::vec4(0,1,0,1);
+        glm::vec4 up = M * glm::vec4(0,1,0,0);
         return glm::lookAt(glm::vec3(eye), glm::vec3(center), glm::vec3(up));
    
     }

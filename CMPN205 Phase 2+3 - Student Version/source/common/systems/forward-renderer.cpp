@@ -136,23 +136,26 @@ namespace our {
         //TODO: (Req 8) Modify the following line such that "cameraForward" contains a vector pointing the camera forward direction
         // HINT: See how you wrote the CameraComponent::getViewMatrix, it should help you solve this one
         glm::vec3 cameraForward = glm::vec3(camera->getViewMatrix() * glm::vec4(0, 0, -1, 0));
+
+
+        // vector : point a, dir N; (p,n) =====> ||(p-a)xN||/||N|| 
         std::sort(transparentCommands.begin(), transparentCommands.end(), [cameraForward](const RenderCommand& first, const RenderCommand& second){
             //TODO: (Req 8) Finish this function
             // HINT: the following return should return true "first" should be drawn before "second". 
 
 
             // calculate first distance
-            glm::vec3 firstDistance = cameraForward * glm::dot(cameraForward, first.center );
+           float firstDistance = glm::dot(cameraForward,glm::vec3( first.localToWorld * glm::vec4(first.center,1)) );
             // calculate second distance
-            glm::vec3 secondDistance = cameraForward * glm::dot(cameraForward, second.center );
-            // return true if first distance is less than second distance
-            return firstDistance.z < secondDistance.z;
+           float secondDistance = glm::dot(cameraForward,  glm::vec3(second.localToWorld * glm::vec4(second.center,1)) );
+            // return true if first distance is greater than second distance
+            return firstDistance > secondDistance;
 
         });
 
         //TODO: (Req 8) Get the camera ViewProjection matrix and store it in VP
         //  Get the camera ViewProjection matrix and store it in VP
-        glm::mat4 VP = camera->getViewMatrix() * camera->getProjectionMatrix(windowSize);
+        glm::mat4 VP =  camera->getProjectionMatrix(windowSize) * camera->getViewMatrix() ;
         
         //TODO: (Req 8) Set the OpenGL viewport using windowSize
         //  Set the OpenGL viewport using windowSize
@@ -183,6 +186,7 @@ namespace our {
 
         //  Draw all the opaque commands
         for(auto command : opaqueCommands){
+            command.material->setup() ;
             // Set the transform uniform
             command.material->shader->set("transform", VP * command.localToWorld);
             // Draw the mesh
@@ -194,12 +198,12 @@ namespace our {
 
 
         
-
-        //glm::mat4 MVP = camera->getProjectionMatrix() * camera->getViewMatrix() * entity->getLocalToWorldMatrix();
+        auto entity = camera->getOwner();
+        glm::mat4 MVP = camera->getProjectionMatrix(windowSize) * camera->getViewMatrix() * entity->getLocalToWorldMatrix();
         
-        //glm::mat4 MV = camera->getViewMatrix() * entity->getLocalToWorldMatrix();
+        glm::mat4 MV = camera->getViewMatrix() * entity->getLocalToWorldMatrix();
         
-        //glm::mat4 M = entity->getLocalToWorldMatrix();
+        glm::mat4 M = entity->getLocalToWorldMatrix();
 
 
 
@@ -214,20 +218,7 @@ namespace our {
             
 
             // Setup the sky material
-            /*
-            skyMaterial->shader->use();
-            skyMaterial->shader->setUniform("MVP", MVP);
-            skyMaterial->shader->setUniform("MV", MV);
-            skyMaterial->shader->setUniform("M", M);
-            skyMaterial->shader->setUniform("cameraPosition", camera->getOwner()->getPosition());
-            skyMaterial->shader->setUniform("cameraForward", cameraForward);
-            skyMaterial->shader->setUniform("time", time);
-            skyMaterial->shader->setUniform("sunDirection", sunDirection);
-            skyMaterial->shader->setUniform("sunColor", sunColor);
-            skyMaterial->shader->setUniform("skyColor", skyColor);
-            skyMaterial->shader->setUniform("skyIntensity", skyIntensity);
-            skyMaterial->shader->setUniform("skyTint", skyTint);
-            */
+          
 
 
 
@@ -305,9 +296,9 @@ namespace our {
         //  draw all the transparent commands
         for(auto command : transparentCommands){
             
-            command.material->shader->set("transform", VP);
+            command.material->setup() ;
+            command.material->shader->set("transform", VP * command.localToWorld);
             // Draw the command mesh
-            command.material->shader->use();
             command.mesh->draw();
             
         }
