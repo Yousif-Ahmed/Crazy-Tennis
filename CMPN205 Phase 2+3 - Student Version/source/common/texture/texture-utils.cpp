@@ -13,8 +13,19 @@ our::Texture2D* our::texture_utils::empty(GLenum format, glm::ivec2 size){
     //Bind the texture 
     texture->bind();
 
-    glTexImage2D(GL_TEXTURE_2D, 0 ,GL_RGBA8 , size.x , size.y , 0 , format ,GL_UNSIGNED_BYTE , (void*) nullptr );
-    
+    glTexImage2D(
+        GL_TEXTURE_2D,    // target
+        0,                // mipmap level
+        format,           // internal format on the GPU
+        size.x,           // width
+        size.y,           // height
+        0,                // border
+        format,           // format  on the CPU
+        GL_UNSIGNED_BYTE, // type on the CPU
+        nullptr           // data
+    );
+
+    texture->unbind();
     return texture;
 }
 

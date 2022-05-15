@@ -23,9 +23,12 @@ void main(){
     // To get the blue channel, we move by amount STRENGTH to the right then sample another pixel from which we take the blue channel
     
     // We move to the left to get red/green pixel , to the right to get green/blue
-    float red_channel = texture(tex,tex_coord-glm::vec2(STRENGTH,0)).r ;
-    float green_channel = texture(tex,tex_coord).g;
-    float blue_channel = texture(tex,tex_coord+glm::vec2(STRENGTH,0)).b ;
-    frag_color = vec4(red_channel,green_channel,blue_channel,1.0);
+    float red   = texture(tex , tex_coord + vec2(-STRENGTH,0)).r ;
+
+    float green = texture(tex , tex_coord ).g;
+    
+    float blue  = texture(tex , tex_coord + vec2(STRENGTH,0)).b ;
+    
+    frag_color = vec4(red,green,blue,1.0);
     //vec4(0.0, 0.0, 0.0, 1.0);
 }
