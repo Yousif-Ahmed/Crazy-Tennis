@@ -1,3 +1,4 @@
+
 #version 330
 
 // The texture holding the scene pixels
@@ -20,5 +21,11 @@ void main(){
     // To apply this effect, we only read the green channel from the correct pixel (as defined by tex_coord)
     // To get the red channel, we move by amount STRENGTH to the left then sample another pixel from which we take the red channel
     // To get the blue channel, we move by amount STRENGTH to the right then sample another pixel from which we take the blue channel
-    frag_color = vec4(0.0, 0.0, 0.0, 1.0);
+    
+    // We move to the left to get red/green pixel , to the right to get green/blue
+    float red_channel = texture(tex,tex_coord-glm::vec2(STRENGTH,0)).r ;
+    float green_channel = texture(tex,tex_coord).g;
+    float blue_channel = texture(tex,tex_coord+glm::vec2(STRENGTH,0)).b ;
+    frag_color = vec4(red_channel,green_channel,blue_channel,1.0);
+    //vec4(0.0, 0.0, 0.0, 1.0);
 }
