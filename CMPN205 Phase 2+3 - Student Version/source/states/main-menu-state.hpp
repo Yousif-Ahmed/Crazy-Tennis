@@ -8,7 +8,7 @@
 
 
 // This state tests and shows how to use the Texture2D class.
-class TextureTestState: public our::State {
+class MainMenuState: public our::State {
 
     our::ShaderProgram* shader;
     our::Mesh* mesh;
@@ -37,7 +37,8 @@ class TextureTestState: public our::State {
         mesh = new our::Mesh(vertices, elements);
         
         // Then we create a texture and load an image into it
-        texture = our::texture_utils::loadImage(config.value("texture", ""));
+        std::cout << config["assets"]["textures"]["mainMenu"];
+        texture = our::texture_utils::loadImage(config["assets"]["textures"]["mainMenu"]);
     }
 
     void onDraw(double deltaTime) override {
@@ -49,6 +50,12 @@ class TextureTestState: public our::State {
         // Then we send 0 (the index of the texture unit we used above) to the "tex" uniform
         shader->set("tex", 0);
         mesh->draw();
+
+        // 
+        if (getApp()->getKeyboard().isPressed(GLFW_KEY_ENTER))
+        {
+            getApp()->changeState("main");
+        }
     }
 
     void onDestroy() override {
