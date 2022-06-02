@@ -37,7 +37,10 @@
                 "ads": "assets/textures/cola.jpeg",
                 "court": "assets/textures/endesga-36-8x.png",
                 "glass": "assets/textures/glass-panels.png",
-                "monkey": "assets/textures/monkey.png"
+                "monkey": "assets/textures/monkey.png",
+                "ball1": "assets/textures/ball_1.png",
+                "ball2": "assets/textures/ball_2.png",
+                "ball3": "assets/textures/ball_3.png"
             },
             "meshes":{
                 "cube": "assets/models/cube.obj",
@@ -49,7 +52,8 @@
                 "leftpanel": "assets/models/leftPanel.obj",
                 "ads": "assets/models/ads_panel.obj",
                 "Tennis-court-blue": "assets/models/Tennis-court-blue.obj",
-                "sphere": "assets/models/sphere.obj"
+                "sphere": "assets/models/sphere.obj",
+                "ball": "assets/models/tennisball.obj"
             },
             "samplers":{
                 "default":{},
@@ -241,6 +245,18 @@
                     },
                     {
                         "type": "Free Camera Controller"
+                    }
+                ]
+            },
+            {
+                "name" : "ball",
+                "position": [0, 0, 0],
+                "scale": [0.005,0.005,0.005],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "ball",
+                        "material": "moon"
                     }
                 ]
             },
