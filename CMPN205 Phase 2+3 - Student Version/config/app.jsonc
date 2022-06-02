@@ -75,6 +75,21 @@
                     },
                     "tint": [0.45, 0.4, 0.5, 1]
                 },
+                "ball1":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "ball1",
+                    "sampler": "default"
+                },
                 "glass":{
                     "type": "textured",
                     "shader": "textured",
@@ -256,7 +271,7 @@
                     {
                         "type": "Mesh Renderer",
                         "mesh": "ball",
-                        "material": "moon"
+                        "material": "ball1"
                     }
                 ]
             },
