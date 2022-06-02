@@ -252,7 +252,7 @@
         "world":[
             {
                 "name": "camera",
-                "position": [0, 0, 10],
+                "position": [5, 15, 80],
                 "components": [
                     {
                         "type": "Camera",
@@ -265,7 +265,7 @@
             },
             {
                 "name" : "ball",
-                "position": [0, 0, 0],
+                "position": [0, 15, 60],
                 "scale": [0.005,0.005,0.005],
                 "components": [
                     {
