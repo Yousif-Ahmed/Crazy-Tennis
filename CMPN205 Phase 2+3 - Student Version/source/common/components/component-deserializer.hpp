@@ -5,7 +5,7 @@
 #include "mesh-renderer.hpp"
 #include "free-camera-controller.hpp"
 #include "movement.hpp"
-
+#include "player-controller.hpp"
 namespace our {
 
     // Given a json object, this function picks and creates a component in the given entity
@@ -21,6 +21,8 @@ namespace our {
             component = entity->addComponent<FreeCameraControllerComponent>();
         } else if (type == MovementComponent::getID()) {
             component = entity->addComponent<MovementComponent>();
+        }else if (type == PlayerControllerComponent::getID()) {
+            component = entity->addComponent<PlayerControllerComponent>();
         }
         if(component) component->deserialize(data);
     }

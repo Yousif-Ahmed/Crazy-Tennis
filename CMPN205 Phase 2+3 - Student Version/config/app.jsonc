@@ -10,6 +10,7 @@
         "fullscreen": false
     },
     "scene": {
+       
         "renderer":{
             "sky": "assets/textures/sky.jpg",
             "postprocess": "assets/shaders/postprocess/vignette.frag"
@@ -46,7 +47,10 @@
                 "monkey-ambient": "assets/textures/monkey-light/ambient_occlusion.jpq",
                 "monkey-emissive": "assets/textures/monkey-light/emissive.jpq",
                 "monkey-roughness": "assets/textures/monkey-light/roughness.jpq",
-                "monkey-specular": "assets/textures/monkey-light/specular.jpq"
+                "monkey-specular": "assets/textures/monkey-light/specular.jpq",
+                "ball1": "assets/textures/ball_1.png",
+                "ball2": "assets/textures/ball_2.png",
+                "ball3": "assets/textures/ball_3.png"
             },
             "meshes":{
                 "cube": "assets/models/cube.obj",
@@ -58,7 +62,8 @@
                 "leftpanel": "assets/models/leftPanel.obj",
                 "ads": "assets/models/ads_panel.obj",
                 "Tennis-court-blue": "assets/models/Tennis-court-blue.obj",
-                "sphere": "assets/models/sphere.obj"
+                "sphere": "assets/models/sphere.obj",
+                "ball": "assets/models/tennisball.obj"
             },
             "samplers":{
                 "default":{},
@@ -79,6 +84,21 @@
                         }
                     },
                     "tint": [0.45, 0.4, 0.5, 1]
+                },
+                "ball1":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "ball1",
+                    "sampler": "default"
                 },
                 "glass":{
                     "type": "textured",
@@ -171,8 +191,15 @@
                         },
                         "depthTesting":{
                             "enabled": true
-                        }
+                        },
+                        "blending":{
+                            "enabled": true,
+                            "sourceFactor": "GL_SRC_ALPHA",
+                            "destinationFactor": "GL_ONE_MINUS_SRC_ALPHA"
+                        },
+                        "depthMask": false
                     },
+                    "transparent": true,
                     "tint": [1, 1, 1, 1],
                     "texture": "fenceTexture",
                     "sampler": "default"
@@ -186,8 +213,15 @@
                         },
                         "depthTesting":{
                             "enabled": true
-                        }
+                        },
+                        "blending":{
+                            "enabled": true,
+                            "sourceFactor": "GL_SRC_ALPHA",
+                            "destinationFactor": "GL_ONE_MINUS_SRC_ALPHA"
+                        },
+                        "depthMask": false
                     },
+                    "transparent": true,
                     "tint": [1, 1, 1, 1],
                     "texture": "gridTexture",
                     "sampler": "default"
@@ -264,15 +298,35 @@
         "world":[
             {
                 "name": "camera",
-                "position": [0, 0, 10],
+                "position": [5, 15, 80],
                 "components": [
                     {
                         "type": "Camera",
                         "far":10000
                     },
+                    
                     {
-                        "type": "Free Camera Controller"
+                        "type":"Free Camera Controller"
                     }
+                   
+                ]
+            },
+            {
+                "name" : "ball",
+                "position": [0, 15, 60],
+                "scale": [0.005,0.005,0.005],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "ball",
+                        "material": "ball1"
+                    },
+                    {
+                        "type":"Player Controller" ,
+                        "linearVelocity": [5, 5, 5]
+
+                    }
+                   
                 ]
             },
             
