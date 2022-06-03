@@ -10,6 +10,7 @@
         "fullscreen": false
     },
     "scene": {
+       
         "renderer":{
             "sky": "assets/textures/sky.jpg",
             "postprocess": "assets/shaders/postprocess/vignette.frag"
@@ -181,8 +182,15 @@
                         },
                         "depthTesting":{
                             "enabled": true
-                        }
+                        },
+                        "blending":{
+                            "enabled": true,
+                            "sourceFactor": "GL_SRC_ALPHA",
+                            "destinationFactor": "GL_ONE_MINUS_SRC_ALPHA"
+                        },
+                        "depthMask": false
                     },
+                    "transparent": true,
                     "tint": [1, 1, 1, 1],
                     "texture": "fenceTexture",
                     "sampler": "default"
@@ -196,8 +204,15 @@
                         },
                         "depthTesting":{
                             "enabled": true
-                        }
+                        },
+                        "blending":{
+                            "enabled": true,
+                            "sourceFactor": "GL_SRC_ALPHA",
+                            "destinationFactor": "GL_ONE_MINUS_SRC_ALPHA"
+                        },
+                        "depthMask": false
                     },
+                    "transparent": true,
                     "tint": [1, 1, 1, 1],
                     "texture": "gridTexture",
                     "sampler": "default"
