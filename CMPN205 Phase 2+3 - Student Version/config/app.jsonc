@@ -23,6 +23,10 @@
                 "textured":{
                     "vs":"assets/shaders/textured.vert",
                     "fs":"assets/shaders/textured.frag"
+                },
+                "lighted":{
+                    "vs":"assets/shaders/lighted.vert",
+                    "fs":"assets/shaders/lighted.frag"
                 }
             },
             "textures":{
@@ -37,7 +41,12 @@
                 "ads": "assets/textures/cola.jpeg",
                 "court": "assets/textures/endesga-36-8x.png",
                 "glass": "assets/textures/glass-panels.png",
-                "monkey": "assets/textures/monkey.png"
+                "monkey": "assets/textures/monkey.png",
+                "monkey-albedo": "assets/textures/monkey-light/albedo.jpq",
+                "monkey-ambient": "assets/textures/monkey-light/ambient_occlusion.jpq",
+                "monkey-emissive": "assets/textures/monkey-light/emissive.jpq",
+                "monkey-roughness": "assets/textures/monkey-light/roughness.jpq",
+                "monkey-specular": "assets/textures/monkey-light/specular.jpq"
             },
             "meshes":{
                 "cube": "assets/models/cube.obj",
@@ -227,7 +236,29 @@
                     "tint": [1, 1, 1, 1],
                     "texture": "billboard",
                     "sampler": "default"
+                },
+
+                "monkey-light":{
+                    "type": "lighted",
+                    "shader": "lighted",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "albedo": "monkey-albedo",
+                    "ambient": "monkey-ambient",
+                    "emissive": "monkey-emissive",
+                    "roughness": "monkey-roughness",
+                    "specular": "monkey-specular",
+                    "sampler": "default"
+                    
                 }
+
+                
             }
         },
         "world":[
@@ -244,6 +275,7 @@
                     }
                 ]
             },
+            
             {
                 "name" : "court",
                 "position": [0, 0, 0],
@@ -315,6 +347,18 @@
                                 "material": "billboard"
                             }
                         ]
+                    }
+                ]
+            },
+            {
+                "name": "monkey",
+                "position": [0, 50, 0],
+                "scale": [10,10,10],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "monkey",
+                        "material": "monkey"
                     }
                 ]
             }
