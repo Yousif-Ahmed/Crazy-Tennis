@@ -63,8 +63,8 @@
                 "ads": "assets/models/ads_panel.obj",
                 "Tennis-court-blue": "assets/models/Tennis-court-blue.obj",
                 "sphere": "assets/models/sphere.obj",
-                "ball": "assets/models/tennisball.obj"
-                // "racket":"assets/models/tennisRacket.obj"
+                "ball": "assets/models/tennisball.obj",
+                "plane": "assets/models/plane.obj"
             },
             "samplers":{
                 "default":{},
@@ -292,11 +292,11 @@
                     "sampler": "default"
                     
                 }
-
                 
             }
         },
         "world":[
+
             {
                 "name": "camera",
                 "position": [5, 15, 80],
@@ -323,6 +323,18 @@
             //         }
             //     ]
             // },
+            {
+                "position": [0, -1, 0],
+                "rotation": [-90, 0, 0],
+                "scale": [150, 150, 150],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "grass"
+                    }
+                ]
+            },
             {
                 "name" : "ball",
                 "position": [0, 15, 60],
