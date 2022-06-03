@@ -31,7 +31,7 @@
                 }
             },
             "textures":{
-                "mainMenu": "assets/menu.png",
+                "mainMenu": "assets/menu.jpg",
                 "moon": "assets/textures/moon.jpg",
                 "grass": "assets/textures/grass_ground_d.jpg",
                 "wood": "assets/textures/wood.jpg",
@@ -64,6 +64,7 @@
                 "Tennis-court-blue": "assets/models/Tennis-court-blue.obj",
                 "sphere": "assets/models/sphere.obj",
                 "ball": "assets/models/tennisball.obj"
+                // "racket":"assets/models/tennisRacket.obj"
             },
             "samplers":{
                 "default":{},
@@ -311,6 +312,17 @@
                    
                 ]
             },
+            // {
+            //     "name":"racket",
+            //     "position":[0,0,0],
+            //     "components":[
+            //         {
+            //             "type": "Mesh Renderer",
+            //             "mesh": "ball",
+            //             "material": "ball1"
+            //         }
+            //     ]
+            // },
             {
                 "name" : "ball",
                 "position": [0, 15, 60],
