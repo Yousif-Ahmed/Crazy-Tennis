@@ -32,6 +32,8 @@ namespace our
             // First of all, we search for an entity containing both a CameraComponent and a FreeCameraControllerComponent
             // As soon as we find one, we break
             CameraComponent* camera = nullptr;
+            std::cout << "i am in hereee" ;
+
             FreeCameraControllerComponent *controller = nullptr;
             for(auto entity : world->getEntities()){
                 camera = entity->getComponent<CameraComponent>();
