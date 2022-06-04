@@ -358,7 +358,7 @@
             },
             {
                 "name" : "ball",
-                "position": [0, 20, 60],
+                "position": [0, 20, -60],
                 "scale": [0.01,0.01,0.01],
                 "components": [
                     {

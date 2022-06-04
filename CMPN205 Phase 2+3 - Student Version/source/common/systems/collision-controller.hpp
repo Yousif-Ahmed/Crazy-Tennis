@@ -46,17 +46,20 @@ class CollisionControllerSystem {
     auto &initialVelocity_ref = controller->initialVelocity;
     auto direction = controller->direction;
     auto horizontal_Z = glm::vec3(0, 0, 1);
-    
+
     // Change the velocity
     motionVelocity_ref.y += -gravitationalAcc_ref * deltaTime;
 
     // r_z = r_z0 + v_z*t ---> delta_r_z = v_z* delta_t
     collisionEntityPosition_ref.z += motionVelocity_ref.z * deltaTime;
 
-    // r_y = r_y0 + t(v_y0 - 0.5*g*t) ---> delta_r_z = *delta_t
-    collisionEntityPosition_ref.y += initialVelocity_ref.y * deltaTime -
-                                     0.5 * gravitationalAcc_ref * deltaTime;
+    // r_y = r_y0 + t(v_y0 - 0.5*g*t) ---> delta_r_z ~= v_y*delta_t
+    collisionEntityPosition_ref.y += motionVelocity_ref.y * deltaTime;
 
+    // std::cout << "velocity in +ve y:" << motionVelocity_ref.y
+              // << "\n ball position in +ve z:" << collisionEntityPosition_ref.z
+              // << "\n position in +ve y:" << collisionEntityPosition_ref.y
+              // << "\n";
     // collision detection
     for (auto Currententity : world->getEntities()) {
       if (!Currententity->getComponent<CollisionControllerComponent>()) {
@@ -73,7 +76,6 @@ class CollisionControllerSystem {
         bool collisionY_grid =
             abs(position.y - collisionEntityPosition_ref.y) <= 5.0;
 
-        
         // collision detection with ground
         bool groundCollision = collisionY && Currententity->name == "court";
 
@@ -82,36 +84,19 @@ class CollisionControllerSystem {
             (Currententity->name == "ads" || Currententity->name == "grid");
         bool otherEntitiesCollision = collisionX && collisionZ;
 
-        if (ads_grid_Collision) {
-          std::cout << "collision with " << Currententity->name << "\n";
-          gravitationalAcc_ref *= -1;
-          initialVelocity_ref.y = 0.1;
-          initialVelocity_ref.z = 0;
-        }
         if (groundCollision) {
           // On Collision the y component of the velocity is reversed
-          gravitationalAcc_ref *= -1;
-          if (motionVelocity_ref.y < 10) {
-            initialVelocity_ref.y = 0;
-            initialVelocity_ref.z = 0;
-          } else {
-            initialVelocity_ref.y = glm::abs(motionVelocity_ref.y) * 0.1;
-            initialVelocity_ref.z = 0.1;
-          }
+          // gravitationalAcc_ref *= -1;
+          initialVelocity_ref.y = motionVelocity_ref.y;
+          motionVelocity_ref.y *= -1;
+          initialVelocity_ref.z = 0.1;
         }
-
-        // else if (otherEntitiesCollision) {  //&& Currententity->name !=
-        //                                        //"grid") {
-        //    //
-        //    std::cout << "collision detected with " << Currententity->name
-        //              << std::endl;
-        //    g = -g;
-        //    controller->initialVelocity.y = -controller->linearVelocity.y;
-        //    controller->initialVelocity.z = -controller->linearVelocity.z;
-        //  }
-        //  if (collisionPosition.y > 20) {
-        //    velocity.y = glm::abs(velocity.y);
-        //  }
+        else if (otherEntitiesCollision && Currententity->name=="racket1") {
+          std::cout << "racket collision\n";
+          initialVelocity_ref.y = motionVelocity_ref.y;
+          motionVelocity_ref.y *= -1;
+          motionVelocity_ref.z = - motionVelocity_ref.z;
+        }
       }
     }
   }

@@ -14,8 +14,7 @@ namespace our {
 // For a more simple example of how to use the ECS framework, see "movement.hpp"
 class CollisionControllerComponent : public Component {
  public:
-  glm::vec3 linearVelocity = {
-      -17, -17, -17};  // Each frame, the entity should move as follows: position +=
+  glm::vec3 linearVelocity = { 0,0,10};  // Each frame, the entity should move as follows: position +=
                  // linearVelocity * deltaTime
   glm::vec3 direction = {1, -1, 1};  // direction of the collision object
   glm::vec3 initialVelocity = {0, 0, 0};
