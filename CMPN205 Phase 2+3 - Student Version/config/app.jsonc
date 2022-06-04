@@ -304,7 +304,8 @@
                 "components": [
                     {
                         "type": "Camera",
-                        "far":10000
+                        "far":10000,
+                        "CameraType":"orthographic"
                     }
                     
                 ]
