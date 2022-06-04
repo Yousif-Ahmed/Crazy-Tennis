@@ -14,8 +14,7 @@ namespace our {
     class PlayerControllerComponent : public Component {
     public:
         glm::vec3 linearVelocity = {5, 5, 5}; // Each frame, the entity should move as follows: position += linearVelocity * deltaTime 
-
-        
+        int playernumber = 1; // The player number, used to identify the player 
         // The ID of this component type is "Free Camera Controller"
         static std::string getID() { return "Player Controller"; }
 

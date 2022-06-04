@@ -7,6 +7,7 @@ namespace our {
     void PlayerControllerComponent::deserialize(const nlohmann::json& data){
         if(!data.is_object()) return;
         linearVelocity = data.value("linearVelocity", linearVelocity);
+        playernumber = data.value("playernumber", playernumber);
         
     }
 }

@@ -64,7 +64,8 @@
                 "Tennis-court-blue": "assets/models/Tennis-court-blue.obj",
                 "sphere": "assets/models/sphere.obj",
                 "ball": "assets/models/tennisball.obj",
-                "plane": "assets/models/plane.obj"
+                "plane": "assets/models/plane.obj",
+                "racket": "assets/models/tennisRacket.obj"
             },
             "samplers":{
                 "default":{},
@@ -304,25 +305,48 @@
                     {
                         "type": "Camera",
                         "far":10000
-                    },
-                    
-                    {
-                        "type":"Free Camera Controller"
                     }
+                    
+                    // {
+                    //     "type":"Free Camera Controller"
+                    // }
                    
                 ]
             },
-            // {
-            //     "name":"racket",
-            //     "position":[0,0,0],
-            //     "components":[
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "ball",
-            //             "material": "ball1"
-            //         }
-            //     ]
-            // },
+            {
+                "name":"racket1",
+                "position":[5,0,60],
+                "components":[
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "racket",
+                        "material": "ball1"
+                    },
+                    {
+                        "type":"Player Controller" ,
+                        "linearVelocity": [5, 5, 5],
+                        "playernumber":1
+
+                    }
+                ]
+            },
+            {
+                "name":"racket2",
+                "position":[5,0,-60],
+                "components":[
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "racket",
+                        "material": "ball1"
+                    },
+                    {
+                        "type":"Player Controller" ,
+                        "linearVelocity": [5, 5, 5],
+                        "playernumber":2
+
+                    }
+                ]
+            },
             {
                 "position": [0, -1, 0],
                 "rotation": [-90, 0, 0],
@@ -344,11 +368,6 @@
                         "type": "Mesh Renderer",
                         "mesh": "ball",
                         "material": "ball1"
-                    },
-                    {
-                        "type":"Player Controller" ,
-                        "linearVelocity": [5, 5, 5]
-
                     }
                    
                 ]
