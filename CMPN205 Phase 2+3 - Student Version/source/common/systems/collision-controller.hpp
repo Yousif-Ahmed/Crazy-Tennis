@@ -57,9 +57,9 @@ class CollisionControllerSystem {
     collisionEntityPosition_ref.y += motionVelocity_ref.y * deltaTime;
 
     // std::cout << "velocity in +ve y:" << motionVelocity_ref.y
-              // << "\n ball position in +ve z:" << collisionEntityPosition_ref.z
-              // << "\n position in +ve y:" << collisionEntityPosition_ref.y
-              // << "\n";
+    // << "\n ball position in +ve z:" << collisionEntityPosition_ref.z
+    // << "\n position in +ve y:" << collisionEntityPosition_ref.y
+    // << "\n";
     // collision detection
     for (auto Currententity : world->getEntities()) {
       if (!Currententity->getComponent<CollisionControllerComponent>()) {
@@ -87,15 +87,16 @@ class CollisionControllerSystem {
         if (groundCollision) {
           // On Collision the y component of the velocity is reversed
           // gravitationalAcc_ref *= -1;
-          initialVelocity_ref.y = motionVelocity_ref.y;
+          // initialVelocity_ref.y = motionVelocity_ref.y;
           motionVelocity_ref.y *= -1;
-          initialVelocity_ref.z = 0.1;
-        }
-        else if (otherEntitiesCollision && Currententity->name=="racket1") {
+          // initialVelocity_ref.z = 0.1;
+        } else if (otherEntitiesCollision &&
+                   (Currententity->name == "racket1" ||
+                    Currententity->name == "racket2")) {
           std::cout << "racket collision\n";
-          initialVelocity_ref.y = motionVelocity_ref.y;
+          // initialVelocity_ref.y = motionVelocity_ref.y;
           motionVelocity_ref.y *= -1;
-          motionVelocity_ref.z = - motionVelocity_ref.z;
+          motionVelocity_ref.z *= -1;
         }
       }
     }
