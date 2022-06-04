@@ -54,26 +54,26 @@ namespace our
                     // S & W moves the player back and forth
                     if (controller->playernumber==1)
                     {
-                        if (app->getKeyboard().isPressed(GLFW_KEY_UP))
-                            entity->localTransform.position.z += (deltaTime * velocity.z);
                         if (app->getKeyboard().isPressed(GLFW_KEY_DOWN))
+                            entity->localTransform.position.z += (deltaTime * velocity.z);
+                        if (app->getKeyboard().isPressed(GLFW_KEY_UP))
                             entity->localTransform.position.z -= (deltaTime * velocity.z);
 
                         // A & D moves the player left or right
-                        if (app->getKeyboard().isPressed(GLFW_KEY_LEFT))
-                            entity->localTransform.position.x += (deltaTime * velocity.x);
                         if (app->getKeyboard().isPressed(GLFW_KEY_RIGHT))
+                            entity->localTransform.position.x += (deltaTime * velocity.x);
+                        if (app->getKeyboard().isPressed(GLFW_KEY_LEFT))
                             entity->localTransform.position.x -= (deltaTime * velocity.x);
                     }else {
-                         if (app->getKeyboard().isPressed(GLFW_KEY_W))
+                         if (app->getKeyboard().isPressed(GLFW_KEY_S))
                             entity->localTransform.position.z += (deltaTime * velocity.z);
-                        if (app->getKeyboard().isPressed(GLFW_KEY_S))
+                        if (app->getKeyboard().isPressed(GLFW_KEY_W))
                             entity->localTransform.position.z -= (deltaTime * velocity.z);
 
                         // A & D moves the player left or right
-                        if (app->getKeyboard().isPressed(GLFW_KEY_D))
-                            entity->localTransform.position.x += (deltaTime * velocity.x);
                         if (app->getKeyboard().isPressed(GLFW_KEY_A))
+                            entity->localTransform.position.x += (deltaTime * velocity.x);
+                        if (app->getKeyboard().isPressed(GLFW_KEY_D))
                             entity->localTransform.position.x -= (deltaTime * velocity.x);
                     }
                 }
