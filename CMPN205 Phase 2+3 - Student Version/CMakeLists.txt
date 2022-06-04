@@ -88,6 +88,12 @@ set(COMMON_SOURCES
         source/common/components/player-controller.hpp
         source/common/systems/player-controller.hpp
 
+        source/common/components/collision-controller.cpp
+        source/common/components/collision-controller.hpp
+        source/common/systems/collision-controller.hpp
+
+
+
 )
 
 # Define the directories in which to search for the included headers

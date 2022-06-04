@@ -364,6 +364,9 @@
                         "type": "Mesh Renderer",
                         "mesh": "ball",
                         "material": "ball1"
+                    },
+                    {
+                        "type":"Collision Controller"
                     }
                    
                 ]

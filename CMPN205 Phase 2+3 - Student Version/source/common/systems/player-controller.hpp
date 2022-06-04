@@ -48,7 +48,6 @@ namespace our
                     auto velocity = controller->linearVelocity;
 
                     // getting the position of the player
-                    // auto &position = entity->localTransform.position;
 
                     // We change the camera position based on the keys WASD/QE
                     // S & W moves the player back and forth
