@@ -358,7 +358,7 @@
             {
                 "name" : "ball",
                 "position": [0, 20, 60],
-                "scale": [0.009,0.009,0.009],
+                "scale": [0.01,0.01,0.01],
                 "components": [
                     {
                         "type": "Mesh Renderer",

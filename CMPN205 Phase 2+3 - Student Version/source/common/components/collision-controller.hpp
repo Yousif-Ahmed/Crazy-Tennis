@@ -14,7 +14,7 @@ namespace our {
     class CollisionControllerComponent : public Component {
     public:
         glm::vec3 linearVelocity = {3, 3, 3}; // Each frame, the entity should move as follows: position += linearVelocity * deltaTime
-        glm::vec3 direction = {1, 1, 1};  // direction of the collision object 
+        glm::vec3 direction = {1 ,-1 ,1};  // direction of the collision object 
         // The ID of this component type is "Free Camera Controller"
         static std::string getID() { return "Collision Controller"; }
 

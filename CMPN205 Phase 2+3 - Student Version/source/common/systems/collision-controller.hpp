@@ -45,61 +45,35 @@ namespace our
                 return;
 
             // getting the assigned velocity from the controller
-            auto velocity = controller->linearVelocity;
-            auto direction = controller->direction;
+            glm::vec3 velocity = controller->linearVelocity;
             auto collisionPostion = collisionEntity->localTransform.position;
+            auto direction = controller->direction;
+            collisionEntity->localTransform.position.z -=direction.z* velocity.z *deltaTime ;
+            collisionEntity->localTransform.position.y += direction.y *deltaTime ;
             // collision detection
             for (auto Currententity : world->getEntities())
             {
-                controller = Currententity->getComponent<CollisionControllerComponent>();
-                if (!controller)
+                if (!Currententity->getComponent<CollisionControllerComponent>()&&!Currententity->getComponent<CameraComponent>())
                 {
                     auto position = Currententity->localTransform.position;
+                    bool collisionX = abs(position.x  - collisionPostion.x) <= 1.0 ;
+                    bool collisionZ = abs(position.z  - collisionPostion.z) <= 1.0;
+                    bool collisiony = abs(position.y  - collisionPostion.y) <= 1.0;
 
-                    bool collisionX = position.x + 1.0 >= collisionPostion.x && collisionPostion.x + 1.0 >= position.x + 1.0;
-                    bool collisionZ = position.z + 1.0 >= collisionPostion.z && collisionPostion.z + 1.0 >= position.z + 1.0;
-                    auto print=[](glm::vec3 a){ 
-                        std::cout<<a.x<<" , "<<a.y<<","<<a.z <<std::endl;
-                    };
-                    // collision detection with curret entity
-                    if (false)
+                    // std::cout <<(abs(position.y  - collisionPostion.y))<< "  y  "<<std::endl;
+                    // std::cout <<(abs(position.z  - collisionPostion.z))<< " z "<<std::endl;
+                    std::cout <<(abs(position.y  - collisionPostion.y) )<<std::endl ;
+                    // collision detection with ground
+                    if (collisiony &&  Currententity->name == "court"  )
                     {
-                        std::cout <<"i am in the collision";
+                        std::cout << "collision detected with " <<Currententity->name<<std::endl;
+                        // if ( collisionPostion.y <= 10)
+                        // {
+                            controller->direction.y = -1 *controller->direction.y;
 
-                        // collision detected
-                        // controller->direction = -controller->direction;
-                        /*
-                        float horizontal = Math.cos(Math.toRadians(pitch)) * wantedSpeedForward;
-                        float vertical = Math.sin(Math.toRadians(pitch)) * wantedSpeedForward;
-                        loc.x += Math.cos(Math.toRadians(yaw)) * horizontal;
-                        loc.z -= Math.sin(Math.toRadians(yaw)) * horizontal;
-                        loc.y += vertical;
-                        //if you wanted strafing, or non-forward motion add this
-                        loc.x -= Math.sin(Math.toRadians(yaw)) * wantedStrafingSpeed;
-                        loc.z += Math.cos(Math.toRadians(yaw)) * wantedStrafingSpeed;
-                        float pitch = glm::acos(glm::dot(collisionPostion,position) / sqrt(glm::dot(collisionPostion,collisionPosition)*glm::dot(position,position)));
-                        // getting the angle with vertical 
-                        float yaw  = glm::sin(pitch)
-                        
-                        float horizontal =glm::cos(glm::radians(pitch)) *velocity.z;
-                        float vertical = glm::sin(glm::radians(pitch)) * velocity.x;
-                        */
-                        // getting the angle with horizotal 
-                        print(collisionEntity->localTransform.position);
-
-                        // collisionEntity->localTransform.position.x +=collisionPostion.x + velocity.x ;
-                        collisionEntity->localTransform.position.y -= velocity.y ;
-                        // collisionEntity->localTransform.position.z +=collisionPostion.z + velocity.z  ;
-                        // if ( collisionEntity->localTransform.position.x  >=5 ||  collisionEntity->localTransform.position.x <-5){
-                        //     collisionEntity->localTransform.position.x -=collisionPostion.x + velocity.x ;
                         // }
-                        if ( collisionEntity->localTransform.position.y <=0){
-                            collisionEntity->localTransform.position.y += 2* velocity.y ;
 
-                        }
-                        // if (collisionEntity->localTransform.position.z >=90 || collisionEntity->localTransform.position.y <=-90){
-                        //     collisionEntity->localTransform.position.z -=collisionPostion.z + velocity.z ;
-                        // }
+                        //controller->direction = - direction;
                     }
                 }
             }
