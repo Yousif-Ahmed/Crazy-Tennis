@@ -30,13 +30,9 @@
             },
             "textures": {
                 "mainMenu": "assets/menu.jpg",
-<<<<<<< HEAD
-                "grass": "assets/textures/grass_ground_d.jpg",
-=======
                 "player1wins": "assets/player1wins.jpeg",
                 "player2wins": "assets/player2wins.jpeg",
                 "grass": "assets/textures/grass.jpg",
->>>>>>> 7cfcf06 (players win menu)
                 "blue-court": "assets/textures/Tennis-court-blue.jpeg",
                 "billboard": "assets/textures/billboard.jpeg",
                 "fenceTexture": "assets/textures/fence.png",
@@ -68,17 +64,9 @@
                 "plane": "assets/models/plane2.obj",
                 "racket": "assets/models/tennisRacket.obj"
             },
-<<<<<<< HEAD
-            "samplers":{
-                "grass-sampler":{
-                    "MIN_FILTER": "GL_LINEAR_MIPMAP_LINEAR"
-                },
-                "default":{
-=======
             "samplers": {
                 "default": {
                     "MAG_FILTER": "GL_LINEAR"
->>>>>>> 7cfcf06 (players win menu)
                 },
                 "pixelated": {
                     "MAG_FILTER": "GL_NEAREST"
@@ -342,11 +330,6 @@
                 ]
             },
             {
-<<<<<<< HEAD
-                "name": "plane",
-                "position": [0, -1, 0],
-                "rotation": [0, 0, 0],
-=======
                 "position": [
                     0,
                     -1,
@@ -362,7 +345,6 @@
                     150,
                     150
                 ],
->>>>>>> 7cfcf06 (players win menu)
                 "components": [
                     {
                         "type": "Mesh Renderer",
