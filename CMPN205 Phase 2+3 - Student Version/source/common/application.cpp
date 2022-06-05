@@ -291,7 +291,14 @@ int our::Application::run(int run_for_frames) {
     if (currentState)
       currentState
           ->onImmediateGui();  // Call to run any required Immediate GUI.
-
+    if (collision) {
+      collision = 0;
+      collision_count = current_frame;
+      isCollision = 1;
+    }
+    if (collision == 0 && (current_frame - collision_count > 5)) {
+      isCollision = 0;
+    }
     // If ImGui is using the mouse or keyboard, then we don't want the captured
     // events to affect our keyboard and mouse objects. For example, if you're
     // focusing on an input and writing "W", the keyboard object shouldn't
@@ -384,6 +391,9 @@ int our::Application::run(int run_for_frames) {
       player1_score = 0;
       player2_score = 0;
       changeState("winner");
+      collision = 1;
+      collision_count = 0;
+      isCollision = 1;
     }
     ++current_frame;
   }

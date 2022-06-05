@@ -55,7 +55,7 @@ namespace our
             this->isCollusionPostProcessing = isCollusionPostProcessing;
         }
 
-        bool getCollusionPostProcessing() {
+        bool getCollisionPostProcessing() {
             return isCollusionPostProcessing;
         }
 
