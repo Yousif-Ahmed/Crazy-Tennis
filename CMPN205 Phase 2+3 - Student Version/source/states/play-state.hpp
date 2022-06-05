@@ -61,24 +61,24 @@ class Playstate: public our::State {
     }
     void onImmediateGui() override
     {
-        ImGui::Begin("score" , 0 , ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+        ImGui::Begin("score" , 0 ,  ImGuiWindowFlags_NoMove);
         // setting window position 
         ImGui::SetWindowPos(ImVec2(950,50));
         // setting window size
-        ImGui::SetWindowSize(ImVec2(150,50));
+        ImGui::SetWindowSize(ImVec2(150,80));
 
         // writing text to window 
-        ImGui::TextColored(ImVec4(1.0f,1.0f,0.0f,1.0f) , "Player 1 | Score : %d" , getApp()->player1_score);
+        ImGui::TextColored(ImVec4(1.0f,1.0f,0.0f,1.0f) , "Player 1   : %d" , getApp()->player1_score);
         ImGui::End();
 
-        ImGui::Begin("score" , 0 , ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+        ImGui::Begin("score" , 0 ,   ImGuiWindowFlags_NoMove);
         // setting window position 
         ImGui::SetWindowPos(ImVec2(950,50));
         // setting window size
-        ImGui::SetWindowSize(ImVec2(175,50));
+        ImGui::SetWindowSize(ImVec2(175,80));
 
         // writing text to window 
-        ImGui::TextColored(ImVec4(1.0f,1.0f,0.0f,1.0f) , "Player 2 | Score : %d" , getApp()->player2_score);
+        ImGui::TextColored(ImVec4(1.0f,1.0f,0.0f,1.0f) , "Player 2   : %d" , getApp()->player2_score);
         
         ImGui::End();
     }
