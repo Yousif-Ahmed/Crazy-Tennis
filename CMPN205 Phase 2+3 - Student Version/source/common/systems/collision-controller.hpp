@@ -65,7 +65,7 @@ class CollisionControllerSystem {
     for (auto Currententity : world->getEntities()) {
       if (!Currententity->getComponent<CollisionControllerComponent>()) {
         auto position = Currententity->localTransform.position;
-            std::cout <<" x " <<position.x <<std::endl ;
+            //std::cout <<" x " <<position.x <<std::endl ;
 
         auto theta = glm::dot(horizontal_Z, controller->direction);
         bool collisionX =

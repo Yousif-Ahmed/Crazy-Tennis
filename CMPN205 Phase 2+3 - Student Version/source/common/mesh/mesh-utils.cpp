@@ -58,7 +58,6 @@ our::Mesh* our::mesh_utils::loadOBJ(const std::string& filename) {
                     attrib.texcoords[2 * index.texcoord_index + 1]
             };
 
-
             vertex.color = {
                     attrib.colors[3 * index.vertex_index + 0] * 255,
                     attrib.colors[3 * index.vertex_index + 1] * 255,

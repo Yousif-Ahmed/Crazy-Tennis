@@ -21,6 +21,7 @@ namespace our {
         PipelineState pipelineState;
         ShaderProgram* shader;
         bool transparent;
+        float repeat;
         
         // This function does 2 things: setup the pipeline state and set the shader program to be used
         virtual void setup() const;
