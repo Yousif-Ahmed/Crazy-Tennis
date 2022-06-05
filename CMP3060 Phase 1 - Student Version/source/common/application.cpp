@@ -302,7 +302,7 @@ int our::Application::run(int run_for_frames) {
                 requested_screenshots.pop();
             } else break;
         }
-
+        // Starting Here
         if (collision == 1) {
             collision_count = current_frame;
             collision = 0;
