@@ -37,7 +37,7 @@ class WinMenuState : public our::State {
     texture1 = our::texture_utils::loadImage(
         config["assets"]["textures"]["player1wins"]);
     texture2 = our::texture_utils::loadImage(
-        config["assets"]["textures"]["player1wins"]);
+        config["assets"]["textures"]["player2wins"]);
   }
 
   void onDraw(double deltaTime) override {
