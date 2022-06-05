@@ -89,9 +89,7 @@ namespace our {
     void AssetLoader<Material>::deserialize(const nlohmann::json& data) {
         if(data.is_object()){
             for(auto& [name, desc] : data.items()){
-                std::cout << name << ' ';
                 std::string type = desc.value("type", "");
-                std::cout << type << std::endl;
                 auto material = createMaterialFromType(type);
                 material->deserialize(desc);
                 assets[name] = material;
@@ -109,7 +107,6 @@ namespace our {
             AssetLoader<Sampler>::deserialize(assetData["samplers"]);
         if(assetData.contains("meshes"))
             AssetLoader<Mesh>::deserialize(assetData["meshes"]);
-        std::cout << "-------------------------------------------------------" << std::endl;
         if(assetData.contains("materials"))
             AssetLoader<Material>::deserialize(assetData["materials"]);
     }

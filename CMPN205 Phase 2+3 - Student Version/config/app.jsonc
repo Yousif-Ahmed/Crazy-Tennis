@@ -32,29 +32,31 @@
             },
             "textures":{
                 "mainMenu": "assets/menu.jpg",
-                "moon": "assets/textures/moon.jpg",
-                "grass": "assets/textures/grass_ground_d.jpg",
-                "wood": "assets/textures/wood.jpg",
+                "grass": "assets/textures/grass.jpg",
                 "blue-court": "assets/textures/Tennis-court-blue.jpeg",
                 "billboard": "assets/textures/billboard.jpeg",
                 "fenceTexture": "assets/textures/fence.png",
                 "gridTexture": "assets/textures/grid.png",
                 "ads": "assets/textures/cola.jpeg",
                 "court": "assets/textures/endesga-36-8x.png",
-                "glass": "assets/textures/glass-panels.png",
-                "monkey": "assets/textures/monkey.png",
-                "monkey-albedo": "assets/textures/monkey-light/albedo.jpq",
-                "monkey-ambient": "assets/textures/monkey-light/ambient_occlusion.jpq",
-                "monkey-emissive": "assets/textures/monkey-light/emissive.jpq",
-                "monkey-roughness": "assets/textures/monkey-light/roughness.jpq",
-                "monkey-specular": "assets/textures/monkey-light/specular.jpq",
+
+                "default-albedo": "assets/textures/default-light/albedo.png",
+                "default-ambient": "assets/textures/default-light/ambient.png",
+                "default-emissive": "assets/textures/default-light/emissive.png",
+                "default-roughness": "assets/textures/default-light/roughness.png",
+                "default-specular": "assets/textures/default-light/specular.png",
+                "shiny": "assets/textures/default-light/shiny.png",
+                "dark": "assets/textures/default-light/dark.png",
+                "dark-green": "assets/textures/default-light/dark-green.png",
+                
                 "ball1": "assets/textures/ball_1.png",
                 "ball2": "assets/textures/ball_2.png",
-                "ball3": "assets/textures/ball_3.png"
+                "ball3": "assets/textures/ball_3.png",
+
+                "rack": "assets/textures/rack.png"
             },
             "meshes":{
-                "cube": "assets/models/cube.obj",
-                "monkey": "assets/models/monkey.obj",
+
                 "court": "assets/models/court.obj",
                 "fence": "assets/models/fence.obj",
                 "grid": "assets/models/grid.obj",
@@ -62,34 +64,22 @@
                 "leftpanel": "assets/models/leftPanel.obj",
                 "ads": "assets/models/ads_panel.obj",
                 "Tennis-court-blue": "assets/models/Tennis-court-blue.obj",
-                "sphere": "assets/models/sphere.obj",
                 "ball": "assets/models/tennisball.obj",
                 "plane": "assets/models/plane.obj",
                 "racket": "assets/models/tennisRacket.obj"
             },
             "samplers":{
-                "default":{},
+                "default":{
+                    "MAG_FILTER": "GL_LINEAR"
+                },
                 "pixelated":{
                     "MAG_FILTER": "GL_NEAREST"
                 }
             },
             "materials":{
-                "metal":{
-                    "type": "tinted",
-                    "shader": "tinted",
-                    "pipelineState": {
-                        "faceCulling":{
-                            "enabled": false
-                        },
-                        "depthTesting":{
-                            "enabled": true
-                        }
-                    },
-                    "tint": [0.45, 0.4, 0.5, 1]
-                },
                 "ball1":{
-                    "type": "textured",
-                    "shader": "textured",
+                    "type": "lighted",
+                    "shader": "lighted",
                     "pipelineState": {
                         "faceCulling":{
                             "enabled": false
@@ -99,30 +89,11 @@
                         }
                     },
                     "tint": [1, 1, 1, 1],
-                    "texture": "ball1",
+                    "albedo": "ball1",
+                    "specular": "ball1",
+                    "ambient": "shiny",
+                    "emissive": "dark",
                     "sampler": "default"
-                },
-                "glass":{
-                    "type": "textured",
-                    "shader": "textured",
-                    "pipelineState": {
-                        "faceCulling":{
-                            "enabled": false
-                        },
-                        "depthTesting":{
-                            "enabled": true
-                        },
-                        "blending":{
-                            "enabled": true,
-                            "sourceFactor": "GL_SRC_ALPHA",
-                            "destinationFactor": "GL_ONE_MINUS_SRC_ALPHA"
-                        },
-                        "depthMask": false
-                    },
-                    "transparent": true,
-                    "tint": [1, 1, 1, 1],
-                    "texture": "glass",
-                    "sampler": "pixelated"
                 },
                 "grass":{
                     "type": "textured",
@@ -139,39 +110,9 @@
                     "texture": "grass",
                     "sampler": "default"
                 },
-                "monkey":{
-                    "type": "textured",
-                    "shader": "textured",
-                    "pipelineState": {
-                        "faceCulling":{
-                            "enabled": false
-                        },
-                        "depthTesting":{
-                            "enabled": true
-                        }
-                    },
-                    "tint": [1, 1, 1, 1],
-                    "texture": "monkey",
-                    "sampler": "default"
-                },
-                "moon":{
-                    "type": "textured",
-                    "shader": "textured",
-                    "pipelineState": {
-                        "faceCulling":{
-                            "enabled": false
-                        },
-                        "depthTesting":{
-                            "enabled": true
-                        }
-                    },
-                    "tint": [1, 1, 1, 1],
-                    "texture": "moon",
-                    "sampler": "default"
-                },
                 "Tennis-court-blueMaterial":{
-                    "type": "textured",
-                    "shader": "textured",
+                    "type": "lighted",
+                    "shader": "lighted",
                     "pipelineState": {
                         "faceCulling":{
                             "enabled": false
@@ -180,8 +121,25 @@
                             "enabled": true
                         }
                     },
-                    "tint": [1, 1, 1, 1],
-                    "texture": "blue-court",
+                    "albedo": "blue-court",
+                    "specular": "blue-court",
+                    "emissive": "dark",
+                    "sampler": "default"
+                },
+                "rack":{
+                    "type": "lighted",
+                    "shader": "lighted",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "albedo": "ball2",
+                    "specular": "ball2",
+                    "emissive": "dark",
                     "sampler": "default"
                 },
                 "fenceMaterial":{
@@ -272,26 +230,6 @@
                     "tint": [1, 1, 1, 1],
                     "texture": "billboard",
                     "sampler": "default"
-                },
-
-                "monkey-light":{
-                    "type": "lighted",
-                    "shader": "lighted",
-                    "pipelineState": {
-                        "faceCulling":{
-                            "enabled": false
-                        },
-                        "depthTesting":{
-                            "enabled": true
-                        }
-                    },
-                    "albedo": "monkey-albedo",
-                    "ambient": "monkey-ambient",
-                    "emissive": "monkey-emissive",
-                    "roughness": "monkey-roughness",
-                    "specular": "monkey-specular",
-                    "sampler": "default"
-                    
                 }
                 
             }
@@ -317,7 +255,7 @@
                     {
                         "type": "Mesh Renderer",
                         "mesh": "racket",
-                        "material": "ball1"
+                        "material": "rack"
                     },
                     {
                         "type":"Player Controller" ,
@@ -334,7 +272,7 @@
                     {
                         "type": "Mesh Renderer",
                         "mesh": "racket",
-                        "material": "ball1"
+                        "material": "rack"
                     },
                     {
                         "type":"Player Controller" ,
@@ -448,14 +386,66 @@
                 ]
             },
             {
-                "name": "monkey",
-                "position": [0, 50, 0],
-                "scale": [10,10,10],
+                "name": "main-light",
+                "position": [0, 0, 0],
                 "components": [
                     {
-                        "type": "Mesh Renderer",
-                        "mesh": "monkey",
-                        "material": "monkey"
+                        "type": "Light",
+                        "lightType": "DIRECTIONAL",
+                        "direction": [0, 0, -1],
+                        "diffuse": [0.6, 0.5, 0.4],
+                        "specular": [0.1, 0.1, 0.1],
+                        "attenuation": [0.1, 0, 0]
+                    }
+                ]
+            },
+            {
+                "name": "main-light2",
+                "position": [0, 0, 0],
+                "components": [
+                    {
+                        "type": "Light",
+                        "lightType": "DIRECTIONAL",
+                        "direction": [0, -1, 0],
+                        "diffuse": [0.6, 0.5, 0.4],
+                        "specular": [0.1, 0.1, 0.1],
+                        "attenuation": [0.1, 0, 0]
+                    }
+                ]
+            },
+            {
+                "name": "spot1",
+                "position": [50, 42, 73],
+                "scale": [0.05,0.05,0.05],
+                "components": [
+                    {
+                        "type": "Light",
+                        "lightType": "POINT",
+                        "direction": [-2, -1, -1],
+                        "position": [50, 42, 73],
+
+                        "diffuse": [0.4, 0.7 ,0.4],
+                        "specular": [0.1, 0.1, 0.1],
+                        "cone_angle": [0, 0.192],
+                        "attenuation": [0.0001, 0.006, 0.006]
+                    }
+                ]
+            },
+            {
+                "name": "spot2",
+                "position": [50, 42, -73],
+                "scale": [0.05,0.05,0.05],
+                "components": [
+                    {
+                        "type": "Light",
+                        "lightType": "POINT",
+                        "direction": [-2, -1, -1],
+                        "position": [50, 42, -73],
+
+                        "diffuse": [0.4, 0.7 ,0.4],
+                        "specular": [0.1, 0.1, 0.1],
+                        "cone_angle": [0, 0.192],
+                        "attenuation": [0.0001, 0.006, 0.006]
                     }
                 ]
             }

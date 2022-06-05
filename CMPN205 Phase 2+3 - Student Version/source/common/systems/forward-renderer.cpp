@@ -1,6 +1,9 @@
 #include "forward-renderer.hpp"
 #include "../mesh/mesh-utils.hpp"
 #include "../texture/texture-utils.hpp"
+#include "../components/light.hpp"
+#include <glm/gtc/matrix_inverse.hpp>
+#include <iostream>
 
 namespace our
 {
@@ -135,6 +138,11 @@ namespace our
         CameraComponent *camera = nullptr;
         opaqueCommands.clear();
         transparentCommands.clear();
+
+        // send light light
+             //assert(i != 0);
+
+
         for (auto entity : world->getEntities())
         {
             // If we hadn't found a camera yet, we look for a camera in this entity
@@ -165,6 +173,33 @@ namespace our
         // If there is no camera, we return (we cannot render without a camera)
         if (camera == nullptr)
             return;
+
+        int i = 0;
+        for (auto entity : world->getEntities())
+        {
+            if (auto light = entity->getComponent<LightComponent>(); light)
+            {
+                auto shader = AssetLoader<ShaderProgram>::get("lighted");
+                shader->use();
+                shader->set("lights[" + std::to_string(i) + "].position", light->position);
+                shader->set("lights[" + std::to_string(i) + "].type", light->lightType);
+                shader->set("lights[" + std::to_string(i) + "].diffuse", light->diffuse);
+                shader->set("lights[" + std::to_string(i) + "].specular", light->specular);
+                shader->set("lights[" + std::to_string(i) + "].direction", light->direction);
+                shader->set("lights[" + std::to_string(i) + "].attenuation", light->attenuation);
+                shader->set("lights[" + std::to_string(i) + "].cone_angles", light->cone_angle);
+                shader->set("eye", camera->getOwner()->localTransform.position);
+                shader->set("VP", camera->getProjectionMatrix(windowSize) * camera->getViewMatrix());
+
+                shader->set("sky.top", {1, 1, 1});
+                shader->set("sky.middle", {0.6, 0.6, 0.6});
+                shader->set("sky.bottom", {0.3, 0.3, 0.3});
+
+                shader->set("light_count",  i + 1);
+                i++;
+            }
+            
+        }
 
         // TODO: (Req 8) Modify the following line such that "cameraForward" contains a vector pointing the camera forward direction
         //  HINT: See how you wrote the CameraComponent::getViewMatrix, it should help you solve this one
@@ -218,6 +253,8 @@ namespace our
             command.material->setup();
             // Set the transform uniform
             command.material->shader->set("transform", VP * command.localToWorld);
+            command.material->shader->set("M", command.localToWorld);
+            command.material->shader->set("M_IT", glm::inverseTranspose(command.localToWorld));
             // Draw the mesh
             command.mesh->draw();
         }
@@ -267,6 +304,8 @@ namespace our
 
             command.material->setup();
             command.material->shader->set("transform", VP * command.localToWorld);
+            command.material->shader->set("M", command.localToWorld);
+            command.material->shader->set("M_IT", glm::inverseTranspose(command.localToWorld));
             // Draw the command mesh
             command.mesh->draw();
         }
