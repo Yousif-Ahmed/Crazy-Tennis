@@ -31,23 +31,14 @@
                 }
             },
             "textures":{
-                "mainMenu": "assets/menu.png",
-                "moon": "assets/textures/moon.jpg",
-                "grass": "assets/textures/grass_ground_d.jpg",
-                "wood": "assets/textures/wood.jpg",
+                "mainMenu": "assets/menu.jpg",
+                "grass": "assets/textures/grass.jpg",
                 "blue-court": "assets/textures/Tennis-court-blue.jpeg",
                 "billboard": "assets/textures/billboard.jpeg",
                 "fenceTexture": "assets/textures/fence.png",
                 "gridTexture": "assets/textures/grid.png",
                 "ads": "assets/textures/cola.jpeg",
                 "court": "assets/textures/endesga-36-8x.png",
-                "glass": "assets/textures/glass-panels.png",
-                "monkey": "assets/textures/monkey.png",
-                "monkey-albedo": "assets/textures/monkey-light/albedo.jpg",
-                "monkey-ambient": "assets/textures/monkey-light/ambient_occlusion.jpg",
-                "monkey-emissive": "assets/textures/monkey-light/emissive.jpg",
-                "monkey-roughness": "assets/textures/monkey-light/roughness.jpg",
-                "monkey-specular": "assets/textures/monkey-light/specular.jpg",
 
                 "default-albedo": "assets/textures/default-light/albedo.png",
                 "default-ambient": "assets/textures/default-light/ambient.png",
@@ -60,11 +51,12 @@
                 
                 "ball1": "assets/textures/ball_1.png",
                 "ball2": "assets/textures/ball_2.png",
-                "ball3": "assets/textures/ball_3.png"
+                "ball3": "assets/textures/ball_3.png",
+
+                "rack": "assets/textures/rack.png"
             },
             "meshes":{
-                "cube": "assets/models/cube.obj",
-                "monkey": "assets/models/Suzanne.obj",
+
                 "court": "assets/models/court.obj",
                 "fence": "assets/models/fence.obj",
                 "grid": "assets/models/grid.obj",
@@ -72,29 +64,19 @@
                 "leftpanel": "assets/models/leftPanel.obj",
                 "ads": "assets/models/ads_panel.obj",
                 "Tennis-court-blue": "assets/models/Tennis-court-blue.obj",
-                "sphere": "assets/models/sphere.obj",
-                "ball": "assets/models/tennisball.obj"
+                "ball": "assets/models/tennisball.obj",
+                "plane": "assets/models/plane.obj",
+                "racket": "assets/models/tennisRacket.obj"
             },
             "samplers":{
-                "default":{},
+                "default":{
+                    "MAG_FILTER": "GL_LINEAR"
+                },
                 "pixelated":{
                     "MAG_FILTER": "GL_NEAREST"
                 }
             },
             "materials":{
-                "metal":{
-                    "type": "tinted",
-                    "shader": "tinted",
-                    "pipelineState": {
-                        "faceCulling":{
-                            "enabled": false
-                        },
-                        "depthTesting":{
-                            "enabled": true
-                        }
-                    },
-                    "tint": [0.45, 0.4, 0.5, 1]
-                },
                 "ball1":{
                     "type": "lighted",
                     "shader": "lighted",
@@ -110,30 +92,8 @@
                     "albedo": "ball1",
                     "specular": "ball1",
                     "ambient": "shiny",
-                    "emissive": "dark-green",
+                    "emissive": "dark",
                     "sampler": "default"
-                },
-                "glass":{
-                    "type": "textured",
-                    "shader": "textured",
-                    "pipelineState": {
-                        "faceCulling":{
-                            "enabled": false
-                        },
-                        "depthTesting":{
-                            "enabled": true
-                        },
-                        "blending":{
-                            "enabled": true,
-                            "sourceFactor": "GL_SRC_ALPHA",
-                            "destinationFactor": "GL_ONE_MINUS_SRC_ALPHA"
-                        },
-                        "depthMask": false
-                    },
-                    "transparent": true,
-                    "tint": [1, 1, 1, 1],
-                    "texture": "glass",
-                    "sampler": "pixelated"
                 },
                 "grass":{
                     "type": "textured",
@@ -150,36 +110,6 @@
                     "texture": "grass",
                     "sampler": "default"
                 },
-                "monkey":{
-                    "type": "textured",
-                    "shader": "textured",
-                    "pipelineState": {
-                        "faceCulling":{
-                            "enabled": false
-                        },
-                        "depthTesting":{
-                            "enabled": true
-                        }
-                    },
-                    "tint": [1, 1, 1, 1],
-                    "texture": "monkey",
-                    "sampler": "default"
-                },
-                "moon":{
-                    "type": "textured",
-                    "shader": "textured",
-                    "pipelineState": {
-                        "faceCulling":{
-                            "enabled": false
-                        },
-                        "depthTesting":{
-                            "enabled": true
-                        }
-                    },
-                    "tint": [1, 1, 1, 1],
-                    "texture": "moon",
-                    "sampler": "default"
-                },
                 "Tennis-court-blueMaterial":{
                     "type": "lighted",
                     "shader": "lighted",
@@ -193,8 +123,23 @@
                     },
                     "albedo": "blue-court",
                     "specular": "blue-court",
-                    "emissive": "blue-court",
-                    "roughness": "blue-court",
+                    "emissive": "dark",
+                    "sampler": "default"
+                },
+                "rack":{
+                    "type": "lighted",
+                    "shader": "lighted",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "albedo": "ball2",
+                    "specular": "ball2",
+                    "emissive": "dark",
                     "sampler": "default"
                 },
                 "fenceMaterial":{
@@ -285,51 +230,74 @@
                     "tint": [1, 1, 1, 1],
                     "texture": "billboard",
                     "sampler": "default"
-                },
-
-                "monkey-light":{
-                    "type": "lighted",
-                    "shader": "lighted",
-                    "pipelineState": {
-                        "faceCulling":{
-                            "enabled": false
-                        },
-                        "depthTesting":{
-                            "enabled": true
-                        }
-                    },
-                    "albedo": "monkey-albedo",
-                    "ambient_occlusion": "monkey-ambient",
-                    "emissive": "monkey-emissive",
-                    "roughness": "monkey-roughness",
-                    "specular": "monkey-specular",
-                    "sampler": "default"
-                    
                 }
-
                 
             }
         },
         "world":[
+
             {
                 "name": "camera",
                 "position": [5, 15, 80],
                 "components": [
                     {
                         "type": "Camera",
-                        "far":10000
-                    },
-                    
-                    {
-                        "type":"Free Camera Controller"
+                        "far":10000,
+                        "CameraType":"orthographic"
                     }
-                   
+                    
+                ]
+            },
+            {
+                "name":"racket1",
+                "position":[5,0,60],
+                "components":[
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "racket",
+                        "material": "rack"
+                    },
+                    {
+                        "type":"Player Controller" ,
+                        "linearVelocity": [10, 10, 10],
+                        "playernumber":1
+
+                    }
+                ]
+            },
+            {
+                "name":"racket2",
+                "position":[5,0,-60],
+                "components":[
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "racket",
+                        "material": "rack"
+                    },
+                    {
+                        "type":"Player Controller" ,
+                        "linearVelocity": [10, 10, 10],
+                        "playernumber":2
+
+                    }
+                ]
+            },
+            {
+                "position": [0, -1, 0],
+                "rotation": [-90, 0, 0],
+                "scale": [150, 150, 150],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "grass"
+                    }
                 ]
             },
             {
                 "name" : "ball",
-                "position": [0, 15, 60],
-                "scale": [0.005,0.005,0.005],
+                "position": [0, 20, -60],
+                "scale": [0.01,0.01,0.01],
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -337,9 +305,7 @@
                         "material": "ball1"
                     },
                     {
-                        "type":"Player Controller" ,
-                        "linearVelocity": [5, 5, 5]
-
+                        "type":"Collision Controller"
                     }
                    
                 ]
@@ -420,27 +386,30 @@
                 ]
             },
             {
-                "name": "monkey",
-                "position": [0, 20, 50],
-                "scale": [10,10,10],
-                "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "monkey",
-                        "material": "monkey-light"
-                    }
-                ]
-            },
-            {
                 "name": "main-light",
                 "position": [0, 0, 0],
                 "components": [
                     {
                         "type": "Light",
                         "lightType": "DIRECTIONAL",
+                        "direction": [0, 0, -1],
+                        "diffuse": [0.6, 0.5, 0.4],
+                        "specular": [0.1, 0.1, 0.1],
+                        "attenuation": [0.1, 0, 0]
+                    }
+                ]
+            },
+            {
+                "name": "main-light2",
+                "position": [0, 0, 0],
+                "components": [
+                    {
+                        "type": "Light",
+                        "lightType": "DIRECTIONAL",
                         "direction": [0, -1, 0],
-                        "diffuse": [0.3, 0.3, 0.3],
-                        "specular": [1, 0.1, 0.1]
+                        "diffuse": [0.6, 0.5, 0.4],
+                        "specular": [0.1, 0.1, 0.1],
+                        "attenuation": [0.1, 0, 0]
                     }
                 ]
             },
@@ -449,11 +418,6 @@
                 "position": [50, 42, 73],
                 "scale": [0.05,0.05,0.05],
                 "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "ball",
-                        "material": "ball1"
-                    },
                     {
                         "type": "Light",
                         "lightType": "POINT",
@@ -472,11 +436,6 @@
                 "position": [50, 42, -73],
                 "scale": [0.05,0.05,0.05],
                 "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "ball",
-                        "material": "ball1"
-                    },
                     {
                         "type": "Light",
                         "lightType": "POINT",

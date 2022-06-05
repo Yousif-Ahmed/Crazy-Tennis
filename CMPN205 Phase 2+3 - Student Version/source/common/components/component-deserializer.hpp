@@ -8,6 +8,7 @@
 #include "player-controller.hpp"
 #include "light.hpp"
 
+#include "collision-controller.hpp"
 namespace our {
 
     // Given a json object, this function picks and creates a component in the given entity
@@ -27,6 +28,9 @@ namespace our {
             component = entity->addComponent<PlayerControllerComponent>();
         } else if (type == LightComponent::getID()) {
             component = entity->addComponent<LightComponent>();
+        }else if (type == CollisionControllerComponent::getID()){
+            component = entity->addComponent<CollisionControllerComponent>();
+
         }
         if(component) component->deserialize(data);
     }
