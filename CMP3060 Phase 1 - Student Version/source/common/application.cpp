@@ -303,6 +303,18 @@ int our::Application::run(int run_for_frames) {
             } else break;
         }
 
+        if (collision == 1) {
+            collision_count = current_frame;
+            collision = 0;
+            isCollision = 1;
+        }
+
+        if (collision_count != 0 && current_frame - collision_count > 10) {
+            collision_count = 0;
+            isCollision = 0;
+
+        }
+
         // Swap the frame buffers
         glfwSwapBuffers(window);
 

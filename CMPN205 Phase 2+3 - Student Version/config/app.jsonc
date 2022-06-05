@@ -13,7 +13,8 @@
        
         "renderer":{
             "sky": "assets/textures/sky.jpg",
-            "postprocess": "assets/shaders/postprocess/vignette.frag"
+            "postprocess": "assets/shaders/postprocess/vignette.frag",
+            "collision-postprocess": "assets/shaders/postprocess/shake.frag"
         },
         "assets":{
             "shaders":{

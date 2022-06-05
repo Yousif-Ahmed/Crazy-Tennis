@@ -4,7 +4,7 @@
 #include <glm/gtc/constants.hpp>
 #include <glm/gtx/fast_trigonometry.hpp>
 #include <glm/trigonometric.hpp>
-
+#include <systems/forward-renderer.hpp>
 #include "../application.hpp"
 #include "../components/collision-controller.hpp"
 #include "../ecs/world.hpp"
@@ -24,9 +24,14 @@ namespace our
 
     // This should be called every frame to update all entities containing a
     // FreeCameraControllerComponent
-    void update(World *world, float deltaTime)
+    void update(World *world, float deltaTime, ForwardRenderer* renderer)
     {
       CollisionControllerComponent *controller = nullptr;
+
+      if (app->isCollision == 0) {
+        renderer->setCollusionPostProcessing(false);
+        renderer->makePostProcessEffect();
+      }
 
       Entity *collisionEntity = nullptr;
       for (auto Currententity : world->getEntities())
@@ -85,7 +90,8 @@ namespace our
               collisionY_grid && collisionZ &&
               (Currententity->name == "grid");
           bool otherEntitiesCollision = collisionX && collisionZ;
-
+          
+          
           if (groundCollision)
           {
             motionVelocity_ref.y *= -1;
@@ -95,6 +101,15 @@ namespace our
             std::cout << Currententity->name << std::endl;
             motionVelocity_ref.y *= -1;
             motionVelocity_ref.z *= -1;
+
+                   renderer->setCollusionPostProcessing(true);
+           renderer->makePostProcessEffect();
+
+           app->collision = 1;
+
+
+     
+
           }else if (grid_Collision )
           {
             std::cout << Currententity->name << std::endl;

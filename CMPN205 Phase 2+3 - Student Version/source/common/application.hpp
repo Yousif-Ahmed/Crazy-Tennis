@@ -74,6 +74,9 @@ namespace our {
         int player1_score =0 ;
         int player2_score =0 ;
         int winner;
+        int collision = 0;
+        int collision_count = 0;
+        int isCollision = 0;
         // Create an application with following configuration
         Application(const nlohmann::json& app_config) : app_config(app_config) {}
         // On destruction, delete all the states
