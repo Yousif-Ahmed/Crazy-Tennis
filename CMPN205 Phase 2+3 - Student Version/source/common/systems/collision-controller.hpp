@@ -39,7 +39,8 @@ class CollisionControllerSystem {
     if (!(collisionEntity && controller)) return;
 
     // getting the assigned velocity from the controller
-    glm::vec3 &motionVelocity_ref = controller->linearVelocity;
+    auto &motionVelocity_ref = controller->linearVelocity;
+
     auto &gravitationalAcc_ref = controller->g;
     auto &collisionEntityPosition_ref =
         collisionEntity->localTransform.position;
@@ -47,15 +48,15 @@ class CollisionControllerSystem {
     auto direction = controller->direction;
     auto horizontal_Z = glm::vec3(0, 0, 1);
 
+
     // Change the velocity
     motionVelocity_ref.y += -gravitationalAcc_ref * deltaTime;
 
     // r_z = r_z0 + v_z*t ---> delta_r_z = v_z* delta_t
-    collisionEntityPosition_ref.z += motionVelocity_ref.z * deltaTime;
+    collisionEntityPosition_ref.z += 2.5* motionVelocity_ref.z * deltaTime;
 
     // r_y = r_y0 + t(v_y0 - 0.5*g*t) ---> delta_r_z ~= v_y*delta_t
     collisionEntityPosition_ref.y += motionVelocity_ref.y * deltaTime;
-
     // std::cout << "velocity in +ve y:" << motionVelocity_ref.y
     // << "\n ball position in +ve z:" << collisionEntityPosition_ref.z
     // << "\n position in +ve y:" << collisionEntityPosition_ref.y
@@ -64,12 +65,13 @@ class CollisionControllerSystem {
     for (auto Currententity : world->getEntities()) {
       if (!Currententity->getComponent<CollisionControllerComponent>()) {
         auto position = Currententity->localTransform.position;
+            std::cout <<" x " <<position.x <<std::endl ;
 
         auto theta = glm::dot(horizontal_Z, controller->direction);
         bool collisionX =
-            abs(position.x - collisionEntityPosition_ref.x) <= 5.0;
+            abs(position.x - collisionEntityPosition_ref.x) <= 3.0;
         bool collisionZ =
-            abs(position.z - collisionEntityPosition_ref.z) <= 5.0;
+            abs(position.z - collisionEntityPosition_ref.z) <= 3.0;
         bool collisionY =
             abs(position.y - collisionEntityPosition_ref.y) <= 1.0;
 
@@ -85,16 +87,12 @@ class CollisionControllerSystem {
         bool otherEntitiesCollision = collisionX && collisionZ;
 
         if (groundCollision) {
-          // On Collision the y component of the velocity is reversed
-          // gravitationalAcc_ref *= -1;
-          // initialVelocity_ref.y = motionVelocity_ref.y;
+
           motionVelocity_ref.y *= -1;
-          // initialVelocity_ref.z = 0.1;
         } else if (otherEntitiesCollision &&
                    (Currententity->name == "racket1" ||
                     Currententity->name == "racket2")) {
           std::cout << "racket collision\n";
-          // initialVelocity_ref.y = motionVelocity_ref.y;
           motionVelocity_ref.y *= -1;
           motionVelocity_ref.z *= -1;
         }
