@@ -106,13 +106,13 @@ namespace our
           if (collisionEntity->localTransform.position.z > 80)
           {
             app->player2_score += 1;
-            collisionEntity->localTransform.position = glm::vec3(10, 20, -60);
+            collisionEntity->localTransform.position = glm::vec3(15, 20, -60);
             controller->intialize(1) ;
           }
           else if (collisionEntity->localTransform.position.z < -80)
           {
             app->player1_score += 1;
-            collisionEntity->localTransform.position = glm::vec3(10, 20, 60);
+            collisionEntity->localTransform.position = glm::vec3(15, 20, 60);
             controller->intialize(-1) ;
           }
         }
