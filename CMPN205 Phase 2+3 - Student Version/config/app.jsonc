@@ -33,6 +33,8 @@
             "textures":{
                 "mainMenu": "assets/menu.jpg",
                 "grass": "assets/textures/grass.jpg",
+                "player1wins":"assets/player1wins.jpeg",
+                "player2wins":"assets/player2wins.jpeg",
                 "blue-court": "assets/textures/Tennis-court-green.png",
                 "billboard": "assets/textures/billboard.jpeg",
                 "fenceTexture": "assets/textures/fence.png",
