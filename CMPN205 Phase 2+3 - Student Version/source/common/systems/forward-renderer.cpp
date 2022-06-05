@@ -181,6 +181,14 @@ namespace our
             {
                 auto shader = AssetLoader<ShaderProgram>::get("lighted");
                 shader->use();
+
+                if (light->lightType == 3)
+                {
+                    shader->set("sky.top", light->top);
+                    shader->set("sky.middle", light->middle);
+                    shader->set("sky.bottom", light->bottom);
+                    continue;
+                }
                 shader->set("lights[" + std::to_string(i) + "].position", light->position);
                 shader->set("lights[" + std::to_string(i) + "].type", light->lightType);
                 shader->set("lights[" + std::to_string(i) + "].diffuse", light->diffuse);
@@ -190,10 +198,6 @@ namespace our
                 shader->set("lights[" + std::to_string(i) + "].cone_angles", light->cone_angle);
                 shader->set("eye", camera->getOwner()->localTransform.position);
                 shader->set("VP", camera->getProjectionMatrix(windowSize) * camera->getViewMatrix());
-
-                shader->set("sky.top", {1, 1, 1});
-                shader->set("sky.middle", {0.6, 0.6, 0.6});
-                shader->set("sky.bottom", {0.3, 0.3, 0.3});
 
                 shader->set("light_count",  i + 1);
                 i++;

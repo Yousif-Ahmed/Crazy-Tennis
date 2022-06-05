@@ -386,6 +386,18 @@
                 ]
             },
             {
+                "name": "sky",
+                "components": [
+                    {
+                        "type": "Light",
+                        "lightType": "SKY",
+                        "top": [1, 1, 1],
+                        "middle": [0.6, 0.6, 0.6], 
+                        "bottom": [0.3, 0.3, 0.3]
+                    }
+                ]
+            },
+            {
                 "name": "main-light",
                 "position": [0, 0, 0],
                 "components": [

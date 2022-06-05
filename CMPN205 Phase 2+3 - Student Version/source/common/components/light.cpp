@@ -23,6 +23,11 @@ namespace our{
             lightType = 2;
             attenuation = data.value("attenuation", glm::vec3(0.0f));
             cone_angle = data.value("cone_angle", glm::vec2(0.0f));
+        } else if (type == "SKY"){
+            lightType = 3;
+            top = data.value("top", glm::vec3(0.0f));
+            middle = data.value("middle", glm::vec3(0.0f));
+            bottom = data.value("bottom", glm::vec3(0.0f));
         }
     }
 }
