@@ -56,7 +56,7 @@ namespace our {
         
         Keyboard keyboard;                  // Instance of "our" keyboard class that handles keyboard functionalities.
         Mouse mouse;                        // Instance of "our" mouse class that handles mouse functionalities.
-
+       
         nlohmann::json app_config;           // A Json file that contains all application configuration
 
         std::unordered_map<std::string, State*> states;   // This will store all the states that the application can run
@@ -71,7 +71,8 @@ namespace our {
         virtual void setupCallbacks();                              // Sets-up the window callback functions from GLFW to our (Mouse/Keyboard) classes.
 
     public:
-
+        int player1_score =0 ;
+        int player2_score =0 ;
         // Create an application with following configuration
         Application(const nlohmann::json& app_config) : app_config(app_config) {}
         // On destruction, delete all the states

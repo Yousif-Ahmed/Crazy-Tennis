@@ -320,7 +320,9 @@ int our::Application::run(int run_for_frames) {
             // Initialize the new scene
             currentState->onInitialize();
         }
-
+        if (player1_score >= 5 || player2_score >= 5) {
+            player1_score =0;  player2_score=0;
+        }
         ++current_frame;
     }
 

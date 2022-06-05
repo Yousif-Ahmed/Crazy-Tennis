@@ -16,8 +16,6 @@ class CollisionControllerComponent : public Component {
  public:
   glm::vec3 linearVelocity = { 0,0,10};  // Each frame, the entity should move as follows: position +=
                  // linearVelocity * deltaTime
-  glm::vec3 direction = {1, -1, 1};  // direction of the collision object
-  glm::vec3 initialVelocity = {0, 0, 0};
   int g = 9.8;
 
   ;  // The ID of this component type is "Free Camera Controller"
@@ -25,6 +23,10 @@ class CollisionControllerComponent : public Component {
 
   // Reads sensitivities & speedupFactor from the given json object
   void deserialize(const nlohmann::json& data) override;
+
+  void intialize (int direction){
+    linearVelocity = {0,0,direction *10};
+  }
 };
 
 }  // namespace our

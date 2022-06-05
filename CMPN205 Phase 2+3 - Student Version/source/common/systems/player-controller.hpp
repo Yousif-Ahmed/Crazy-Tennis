@@ -70,9 +70,9 @@ namespace our
                             entity->localTransform.position.z -= (deltaTime * velocity.z);
 
                         // A & D moves the player left or right
-                        if (app->getKeyboard().isPressed(GLFW_KEY_A))
-                            entity->localTransform.position.x += (deltaTime * velocity.x);
                         if (app->getKeyboard().isPressed(GLFW_KEY_D))
+                            entity->localTransform.position.x += (deltaTime * velocity.x);
+                        if (app->getKeyboard().isPressed(GLFW_KEY_A))
                             entity->localTransform.position.x -= (deltaTime * velocity.x);
                     }
                 }
