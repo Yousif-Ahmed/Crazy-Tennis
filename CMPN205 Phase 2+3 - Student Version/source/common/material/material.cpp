@@ -2,6 +2,7 @@
 
 #include "../asset-loader.hpp"
 #include "deserialize-utils.hpp"
+#include <iostream>
 
 namespace our {
 
@@ -65,12 +66,14 @@ namespace our {
     void LightedMaterial::deserialize(const nlohmann::json& data){
         Material::deserialize(data);
         if(!data.is_object()) return;
+        sampler = AssetLoader<Sampler>::get(data.value("sampler", ""));
+        albedo = AssetLoader<Texture2D>::get(data.value("albedo", "default-albedo"));
+        specular = AssetLoader<Texture2D>::get(data.value("specular", "default-specular"));
+        ambient_occlusion = AssetLoader<Texture2D>::get(data.value("ambient_occlusion", "default-ambient"));
+        roughness = AssetLoader<Texture2D>::get(data.value("roughness", "default-roughness"));
+        emissive = AssetLoader<Texture2D>::get(data.value("emissive", "default-emissive"));
 
-        albedo = AssetLoader<Texture2D>::get(data.value("albedo", ""));
-        specular = AssetLoader<Texture2D>::get(data.value("specular", ""));
-        ambient_occlusion = AssetLoader<Texture2D>::get(data.value("ambient_occlusion", ""));
-        roughness = AssetLoader<Texture2D>::get(data.value("roughness", ""));
-        emissive = AssetLoader<Texture2D>::get(data.value("emissive", ""));
+        assert(albedo != nullptr);
     }
 
     void LightedMaterial::setup() const {
@@ -100,6 +103,8 @@ namespace our {
         emissive->bind();
         sampler->bind(4);
         shader->set("material.emissive", 4);
+
+        glActiveTexture(GL_TEXTURE0);
 
     }
 

@@ -21,8 +21,6 @@ namespace our
     public:
         // When a state enters, it should call this function and give it the pointer to the application
         void enter(Application* app){
-            std::cout << "i am in player" ;
-
             this->app = app;
         }
 
@@ -32,7 +30,6 @@ namespace our
             PlayerControllerComponent *controller = nullptr;
             Entity * entity = nullptr ;
             for(auto Currententity : world->getEntities()){
-                std::cout << "i am in player" ;
                 controller = Currententity->getComponent<PlayerControllerComponent>();
                 if(controller){ 
                     entity = Currententity;
@@ -41,8 +38,6 @@ namespace our
             }
             // If there is no entity with both a CameraComponent and a FreeCameraControllerComponent, we can do nothing so we return
             if(!(entity && controller)) return;
-            std::cout << "i am in hereee" ;
-
             // getting the assigned velocity from the controller
             auto velocity = controller->linearVelocity;
             

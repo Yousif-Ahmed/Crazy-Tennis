@@ -37,7 +37,6 @@ class MainMenuState: public our::State {
         mesh = new our::Mesh(vertices, elements);
         
         // Then we create a texture and load an image into it
-        std::cout << config["assets"]["textures"]["mainMenu"];
         texture = our::texture_utils::loadImage(config["assets"]["textures"]["mainMenu"]);
     }
 
