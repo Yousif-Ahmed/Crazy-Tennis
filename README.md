@@ -40,7 +40,7 @@ git clone https://github.com/Yousif-Ahmed/Crazy-Tennis
 
 5. **Run this Command**
 ```
-.\bin\GAME_APPLICATION.exe -c="config\test_app.jsonc"
+.\bin\GAME_APPLICATION.exe"
 ```
 
 ## 💻 Built Using <a name = "tech"></a>
