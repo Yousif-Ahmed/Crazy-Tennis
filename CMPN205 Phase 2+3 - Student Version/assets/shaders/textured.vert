@@ -10,10 +10,11 @@ out Varyings {
 } vs_out;
 
 uniform mat4 transform;
+uniform float repeat;
 
 void main(){
     //DONE: (Req 6) Change the next line to apply the transformation matrix
     gl_Position = transform* vec4(position, 1.0);
     vs_out.color = color;
-    vs_out.tex_coord = tex_coord;
+    vs_out.tex_coord = tex_coord * repeat;
 }

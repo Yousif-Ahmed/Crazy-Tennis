@@ -51,6 +51,7 @@ namespace our
             this->skyMaterial->tint = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
             this->skyMaterial->alphaThreshold = 1.0f;
             this->skyMaterial->transparent = false;
+            this->skyMaterial->repeat = 1;
         }
 
         // Then we check if there is a postprocessing shader in the configuration

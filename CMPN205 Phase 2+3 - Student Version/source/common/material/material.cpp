@@ -11,6 +11,7 @@ namespace our {
         //DONE: (Req 6) Write this function
         pipelineState.setup();
         shader->use();
+        shader->set("repeat", repeat);
     }
 
     // This function read the material data from a json object
@@ -22,6 +23,7 @@ namespace our {
         }
         shader = AssetLoader<ShaderProgram>::get(data["shader"].get<std::string>());
         transparent = data.value("transparent", false);
+        repeat = data.value("repeat", 1);
     }
 
     // This function should call the setup of its parent and

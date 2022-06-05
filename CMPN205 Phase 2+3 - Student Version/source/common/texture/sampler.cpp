@@ -13,6 +13,7 @@ namespace our {
         set(GL_TEXTURE_WRAP_T, (GLint)gl_enum_deserialize::texture_wrapping_modes.at(data.value("WRAP_T", "GL_REPEAT")));
         set(GL_TEXTURE_MAX_ANISOTROPY_EXT, data.value("MAX_ANISOTROPY", 1.0f));
         set(GL_TEXTURE_BORDER_COLOR, data.value("BORDER_COLOR", glm::vec4(0, 0, 0, 0)));
+        set(GL_TEXTURE_MAX_ANISOTROPY, GL_MAX_TEXTURE_MAX_ANISOTROPY);
     }
 
 }
