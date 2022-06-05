@@ -49,8 +49,7 @@ namespace our
       auto &gravitationalAcc_ref = controller->g;
       auto &collisionEntityPosition_ref =
           collisionEntity->localTransform.position;
-      auto &initialVelocity_ref = controller->initialVelocity;
-      auto direction = controller->direction;
+      
       auto horizontal_Z = glm::vec3(0, 0, 1);
 
       // Change the velocity
@@ -69,7 +68,6 @@ namespace our
         {
           auto position = Currententity->localTransform.position;
 
-          auto theta = glm::dot(horizontal_Z, controller->direction);
           bool collisionX =
               abs(position.x - collisionEntityPosition_ref.x) <= 4.0;
           bool collisionZ =
@@ -78,14 +76,14 @@ namespace our
               abs(position.y - collisionEntityPosition_ref.y) <= 1.0;
 
           bool collisionY_grid =
-              abs(position.y - collisionEntityPosition_ref.y) <= 5.0;
+              abs(position.y - collisionEntityPosition_ref.y) <= 2.0;
 
           // collision detection with ground
           bool groundCollision = collisionY && Currententity->name == "court";
 
-          bool ads_grid_Collision =
+          bool grid_Collision =
               collisionY_grid && collisionZ &&
-              (Currententity->name == "ads" || Currententity->name == "grid");
+              (Currententity->name == "grid");
           bool otherEntitiesCollision = collisionX && collisionZ;
 
           if (groundCollision)
@@ -98,27 +96,25 @@ namespace our
             std::cout << Currententity->name << std::endl;
             motionVelocity_ref.y *= -1;
             motionVelocity_ref.z *= -1;
+          }else if (grid_Collision )
+          {
+            std::cout << Currententity->name << std::endl;
+            motionVelocity_ref.y *= -1;
+            motionVelocity_ref.z *= -1;
           }
           // score handling
           // then player 2 score a goal
           if (collisionEntity->localTransform.position.z > 80)
           {
             app->player2_score += 1;
-            std::cout << "PLayer 1 Score " << app->player1_score << std::endl;
-
-            std::cout << "Player 2 Score  " << app->player2_score << std::endl;
             collisionEntity->localTransform.position = glm::vec3(0, 20, -60);
-            controller->linearVelocity = glm::vec3(0, 0, 10);
-            controller->initialVelocity = glm::vec3(0, 0, 0);
+            controller->intialize(1) ;
           }
           else if (collisionEntity->localTransform.position.z < -80)
           {
             app->player1_score += 1;
-            std::cout << "PLayer 1 Score " << app->player1_score << std::endl;
-            std::cout << "Player 2 Score  " << app->player2_score << std::endl;
             collisionEntity->localTransform.position = glm::vec3(0, 20, 60);
-            controller->linearVelocity = glm::vec3(0, 0, -10);
-            controller->initialVelocity = glm::vec3(0, 0, 0);
+            controller->intialize(-1) ;
           }
         }
       }

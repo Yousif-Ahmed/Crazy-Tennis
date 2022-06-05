@@ -7,7 +7,6 @@ namespace our {
     void CollisionControllerComponent::deserialize(const nlohmann::json& data){
         if(!data.is_object()) return;
         linearVelocity = data.value("linearVelocity", linearVelocity);
-        direction = data.value("direction", direction);
         
     }
 }
