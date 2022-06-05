@@ -57,7 +57,7 @@ namespace our
       motionVelocity_ref.y += -gravitationalAcc_ref * deltaTime;
 
       // r_z = r_z0 + v_z*t ---> delta_r_z = v_z* delta_t
-      collisionEntityPosition_ref.z += 4 * motionVelocity_ref.z * deltaTime;
+      collisionEntityPosition_ref.z += 5 * motionVelocity_ref.z * deltaTime;
 
       // r_y = r_y0 + t(v_y0 - 0.5*g*t) ---> delta_r_z ~= v_y*delta_t
       collisionEntityPosition_ref.y += motionVelocity_ref.y * deltaTime;
@@ -71,7 +71,7 @@ namespace our
 
           auto theta = glm::dot(horizontal_Z, controller->direction);
           bool collisionX =
-              abs(position.x - collisionEntityPosition_ref.x) <= 3.0;
+              abs(position.x - collisionEntityPosition_ref.x) <= 4.0;
           bool collisionZ =
               abs(position.z - collisionEntityPosition_ref.z) <= 4.0;
           bool collisionY =
@@ -93,14 +93,15 @@ namespace our
 
             motionVelocity_ref.y *= -1;
           }
-          else if (otherEntitiesCollision)
+          else if (otherEntitiesCollision && (Currententity->name == "racket1"|| Currententity->name == "racket2") )
           {
+            std::cout << Currententity->name << std::endl;
             motionVelocity_ref.y *= -1;
             motionVelocity_ref.z *= -1;
           }
           // score handling
           // then player 2 score a goal
-          if (collisionEntity->localTransform.position.z > 70)
+          if (collisionEntity->localTransform.position.z > 80)
           {
             app->player2_score += 1;
             std::cout << "PLayer 1 Score " << app->player1_score << std::endl;
@@ -110,7 +111,7 @@ namespace our
             controller->linearVelocity = glm::vec3(0, 0, 10);
             controller->initialVelocity = glm::vec3(0, 0, 0);
           }
-          else if (collisionEntity->localTransform.position.z < -70)
+          else if (collisionEntity->localTransform.position.z < -80)
           {
             app->player1_score += 1;
             std::cout << "PLayer 1 Score " << app->player1_score << std::endl;
