@@ -9,6 +9,7 @@
 #include <asset-loader.hpp>
 #include <systems/player-controller.hpp>
 #include <systems/collision-controller.hpp>
+#include <imgui.h>
 
 // This state shows how to use the ECS framework and deserialization.
 class Playstate: public our::State {
@@ -57,5 +58,28 @@ class Playstate: public our::State {
         cameraController.exit();
         // and we delete all the loaded assets to free memory on the RAM and the VRAM
         our::clearAllAssets();
+    }
+    void onImmediateGui() override
+    {
+        ImGui::Begin("score" , 0 , ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+        // setting window position 
+        ImGui::SetWindowPos(ImVec2(950,50));
+        // setting window size
+        ImGui::SetWindowSize(ImVec2(150,50));
+
+        // writing text to window 
+        ImGui::TextColored(ImVec4(1.0f,1.0f,0.0f,1.0f) , "Player 1 | Score : %d" , getApp()->player1_score);
+        ImGui::End();
+
+        ImGui::Begin("score" , 0 , ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+        // setting window position 
+        ImGui::SetWindowPos(ImVec2(950,50));
+        // setting window size
+        ImGui::SetWindowSize(ImVec2(175,50));
+
+        // writing text to window 
+        ImGui::TextColored(ImVec4(1.0f,1.0f,0.0f,1.0f) , "Player 2 | Score : %d" , getApp()->player2_score);
+        
+        ImGui::End();
     }
 };
